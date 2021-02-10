@@ -2,6 +2,7 @@ import { React, Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import "antd/dist/antd.css";
+import classes from "./Login.module.css";
 
 import AuthContext from "../../context/AuthContext";
 
@@ -13,7 +14,7 @@ const layout = {
     span: 8,
   },
   wrapperCol: {
-    span: 16,
+    span: 8,
   },
 };
 const tailLayout = {
@@ -67,7 +68,7 @@ class Login extends Component {
       return <Redirect to="/management" />;
     }
     return (
-      <div>
+      <div className={classes.Form}>
         <Form
           {...layout}
           name="basic"
