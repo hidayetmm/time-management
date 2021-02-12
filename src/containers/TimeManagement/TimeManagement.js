@@ -1,5 +1,6 @@
 import React from "react";
 import AuthContext from "../../context/AuthContext";
+import classes from "./TimeManagement.module.css";
 
 import TimeManager from "./TimeManager/TimeManager";
 import ManagerData from "./ManagerData/ManagerData";
@@ -10,7 +11,7 @@ function TimeManagement() {
       {(value) => {
         console.log("CONTEXT: ", value);
         return (
-          <div style={{ height: 400, width: "100%" }}>
+          <div className={classes.TimeManagement}>
             <TimeManager />
             <ManagerData />
           </div>

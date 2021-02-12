@@ -2,11 +2,10 @@ import { React, Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
 import "antd/dist/antd.css";
-import classes from "./Login.module.css";
+import classes from "./Registration.module.css";
 
 import AuthContext from "../../context/AuthContext";
 
-// import { FormControl, Button, TextField } from "@material-ui/core";
 import { Form, Input, Button, Checkbox } from "antd";
 
 const layout = {
@@ -24,7 +23,7 @@ const tailLayout = {
   },
 };
 
-class Login extends Component {
+class Registration extends Component {
   state = {
     loggedUser: null,
     status: null,
@@ -33,8 +32,8 @@ class Login extends Component {
 
   submitHandler = (values) => {
     console.log(values);
-    let baseUrl = "https://time-mgm-demo.getsandbox.com:443/auth/login";
-    let data = values;
+    let baseUrl = "https://time-mgm-demo.getsandbox.com:443/users";
+    let data = { ...values, role: "ROLE_USER" };
     axios
       .post(baseUrl, data)
       .then((response) => {
@@ -127,6 +126,6 @@ class Login extends Component {
   }
 }
 
-Login.contextType = AuthContext;
+Registration.contextType = AuthContext;
 
-export default Login;
+export default Registration;

@@ -1,12 +1,13 @@
 import { React, Component } from "react";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
+import AuthContext from "./context/AuthContext";
 
 import Login from "./containers/Login/Login";
 import TimeManagement from "./containers/TimeManagement/TimeManagement";
 import Navigation from "./components/Navigation/Navigation";
 import NotFound from "./components/NotFound/NotFound";
-import AuthContext from "./context/AuthContext";
+import Registration from "./containers/Registration/Registration";
 
 class App extends Component {
   state = {
@@ -30,6 +31,7 @@ class App extends Component {
           <Switch>
             <Redirect exact from="/" to="/management" />
             <Route path="/login" component={Login} />
+            <Route path="/registration" component={Registration} />
             <Route path="/management" component={TimeManagement} />
             <Route path="/404" component={NotFound} />
             <Redirect from="*" to="/404" />

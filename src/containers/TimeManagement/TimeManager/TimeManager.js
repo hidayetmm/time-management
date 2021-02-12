@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Input } from "antd";
+import { Input, Button } from "antd";
 import { DatePicker, Space } from "antd";
 import { Select } from "antd";
 
@@ -18,10 +18,11 @@ function TimeManager(props) {
     <div>
       <Space direction="horizontal" size={12}>
         <Input placeholder="Enter work name" style={{ width: "300px" }} />
-        <Select mode="tags" style={{ width: "150px" }} placeholder="Tags">
+        <Select mode="tags" style={{ width: "80px" }} placeholder="Tags">
           {children}
         </Select>
         <RangePicker showTime={{ format: "HH:mm" }} format="YYYY-MM-DD HH:mm" />
+        <Button type="primary">Add</Button>
       </Space>
     </div>
   );
