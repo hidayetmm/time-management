@@ -9,7 +9,7 @@ const columns = [
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (text) => <a href="#">{text}</a>,
+    render: (text) => <a href="/#">{text}</a>,
   },
   {
     title: "Age",

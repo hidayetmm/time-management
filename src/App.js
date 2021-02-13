@@ -30,7 +30,11 @@ class App extends Component {
         <div className="App">
           <Navigation />
           <Switch>
-            <PrivateRoute path="/management" component={TimeManagement} />
+            <PrivateRoute
+              authed={this.state.userDetails}
+              path="/management"
+              component={TimeManagement}
+            />
             <Redirect exact from="/" to="/management" />
             <Route path="/login" component={Login} />
             <Route path="/registration" component={Registration} />

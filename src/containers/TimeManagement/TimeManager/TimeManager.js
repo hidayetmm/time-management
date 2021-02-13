@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import React from "react";
 
 import { Input, Button } from "antd";
 import { DatePicker, Space } from "antd";
@@ -14,8 +14,8 @@ for (let i = 10; i < 36; i++) {
 }
 
 function TimeManager(props) {
-  const [column, setColumn] = useState({});
-  const [data, setData] = useState({});
+  // const [column, setColumn] = useState({});
+  // const [data, setData] = useState({});
   return (
     <div>
       <Space direction="horizontal" size={12}>

@@ -8,12 +8,16 @@ function PrivateRoute({ component: Component, authed, ...rest }) {
   return (
     <AuthContext.Consumer>
       {(value) => {
+        console.log(authed);
+        console.log(value.userDetails);
         return (
           <Route
             {...rest}
             render={(props) =>
-              authed === value.userDetails ? (
-                <TimeManagement {...props} />
+              authed ? (
+                <Component {...props}>
+                  <TimeManagement />
+                </Component>
               ) : (
                 <Redirect
                   to={{ pathname: "/login", state: { from: props.location } }}
