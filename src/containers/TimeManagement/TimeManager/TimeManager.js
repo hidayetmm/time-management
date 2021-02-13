@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useState } from "react";
 
 import { Input, Button } from "antd";
 import { DatePicker, Space } from "antd";
@@ -14,11 +14,13 @@ for (let i = 10; i < 36; i++) {
 }
 
 function TimeManager(props) {
+  const [column, setColumn] = useState({});
+  const [data, setData] = useState({});
   return (
     <div>
       <Space direction="horizontal" size={12}>
         <Input placeholder="Enter work name" style={{ width: "300px" }} />
-        <Select mode="tags" style={{ width: "80px" }} placeholder="Tags">
+        <Select mode="tags" style={{ width: "150px" }} placeholder="Tags">
           {children}
         </Select>
         <RangePicker showTime={{ format: "HH:mm" }} format="YYYY-MM-DD HH:mm" />

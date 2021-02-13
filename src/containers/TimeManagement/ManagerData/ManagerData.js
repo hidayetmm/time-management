@@ -2,12 +2,14 @@ import { React, Component } from "react";
 
 import { Table, Tag, Space } from "antd";
 
+console.log(JSON.parse(localStorage.getItem("user")));
+
 const columns = [
   {
     title: "Name",
     dataIndex: "name",
     key: "name",
-    render: (text) => <a href="/#">{text}</a>,
+    render: (text) => <a href="#">{text}</a>,
   },
   {
     title: "Age",
@@ -53,7 +55,8 @@ const columns = [
 const data = [
   {
     key: "1",
-    name: "John Brown",
+    // name: JSON.parse(localStorage.getItem("user")).username,
+    name: "hidayat",
     age: 32,
     address: "New York No. 1 Lake Park",
     tags: ["nice", "developer"],

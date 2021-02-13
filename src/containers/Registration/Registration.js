@@ -117,7 +117,7 @@ class Registration extends Component {
             <p
               style={{ fontSize: "90%", color: "#3f51b5", textAlign: "center" }}
             >
-              Please, enter your login information.
+              Please, enter your username and password to register.
             </p>
           )}
         </Form>

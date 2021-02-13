@@ -30,9 +30,12 @@ class App extends Component {
           <Navigation />
           <Switch>
             <Redirect exact from="/" to="/management" />
-            <Route path="/login" component={Login} />
             <Route path="/registration" component={Registration} />
-            <Route path="/management" component={TimeManagement} />
+            <TimeManagement
+              authed={this.state.userDetails}
+              path="/management"
+            />
+            <Route path="/login" component={Login} />
             <Route path="/404" component={NotFound} />
             <Redirect from="*" to="/404" />
           </Switch>
