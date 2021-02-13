@@ -8,6 +8,7 @@ import TimeManagement from "./containers/TimeManagement/TimeManagement";
 import Navigation from "./components/Navigation/Navigation";
 import NotFound from "./components/NotFound/NotFound";
 import Registration from "./containers/Registration/Registration";
+import PrivateRoute from "./PrivateRoute";
 
 class App extends Component {
   state = {
@@ -29,13 +30,10 @@ class App extends Component {
         <div className="App">
           <Navigation />
           <Switch>
+            <PrivateRoute path="/management" component={TimeManagement} />
             <Redirect exact from="/" to="/management" />
-            <Route path="/registration" component={Registration} />
-            <TimeManagement
-              authed={this.state.userDetails}
-              path="/management"
-            />
             <Route path="/login" component={Login} />
+            <Route path="/registration" component={Registration} />
             <Route path="/404" component={NotFound} />
             <Redirect from="*" to="/404" />
           </Switch>
