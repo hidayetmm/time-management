@@ -6,7 +6,6 @@ import classes from "./Login.module.css";
 
 import AuthContext from "../../context/AuthContext";
 
-// import { FormControl, Button, TextField } from "@material-ui/core";
 import { Form, Input, Button, Checkbox } from "antd";
 
 const layout = {
@@ -29,19 +28,19 @@ class Login extends Component {
     loggedUser: null,
     status: null,
     redirect: null,
+    loading: false,
   };
 
   submitHandler = (values) => {
-    console.log(values);
+    this.setState({ loading: true });
     let baseUrl = "https://time-mgm-demo.getsandbox.com:443/auth/login";
     let data = values;
     axios
       .post(baseUrl, data)
       .then((response) => {
-        console.log(response.data.data);
-        this.setState({ redirect: "/management" });
         localStorage.setItem("user", JSON.stringify(response.data.data));
         this.context.setUserDetails(response.data.data);
+        this.setState({ redirect: "/management" });
       })
       .catch((error) => {
         this.setState({ status: error.response.data.error.message });
@@ -55,8 +54,6 @@ class Login extends Component {
         [e.target.name]: e.target.value,
       },
     }));
-
-    console.log(this.state.login);
   };
 
   render() {
@@ -104,7 +101,11 @@ class Login extends Component {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.loading}
+            >
               Submit
             </Button>
           </Form.Item>

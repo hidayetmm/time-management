@@ -1,33 +1,125 @@
-import React from "react";
+import React, { Component } from "react";
+import axios from "axios";
+import AuthContext from "../../../context/AuthContext";
 
-import { Input, Button } from "antd";
-import { DatePicker, Space } from "antd";
-import { Select } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  Space,
+  InputNumber,
+  message,
+} from "antd";
 
-const { RangePicker } = DatePicker;
+class TimeManager extends Component {
+  state = {
+    loading: false,
+    errorMessage: null,
+  };
 
-const { Option } = Select;
+  onSubmitHandler = (values) => {
+    this.setState({ loading: true });
+    values.date = values.date.toDate().toLocaleDateString("en-CA");
+    const modifiedValues = {
+      ...values,
+      userId: JSON.parse(localStorage.getItem("user")).id,
+    };
 
-const children = [];
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+    let url = "https://time-mgm-demo.getsandbox.com:443/records";
+    axios
+      .post(url, modifiedValues)
+      .then((response) => {
+        this.setState({ loading: false });
+        message.success("Successfully added.");
+        console.log(response.data.data);
+      })
+      .catch((error) => {
+        this.setState({ loading: false });
+        console.log(error.response.data.error);
+        if (error.response.data.error.code === 1006) {
+          message.warning(
+            "Date should not be in future! Unless you're not a time traveler."
+          );
+        }
+      });
+  };
+
+  warning = () => {
+    message.warning("Please fill in all the required fields.");
+  };
+
+  render() {
+    const dateFormat = "YYYY/MM/DD";
+
+    return (
+      <div>
+        <Form
+          onFinish={(values) => this.onSubmitHandler(values)}
+          scrollToFirstError
+          onFinishFailed={this.warning}
+        >
+          <Space direction="horizontal" size={12}>
+            <Form.Item
+              name="workName"
+              rules={[
+                {
+                  required: true,
+                  message: false,
+                },
+              ]}
+            >
+              <Input placeholder="Work name" style={{ width: "300px" }} />
+            </Form.Item>
+            <Form.Item
+              name="description"
+              rules={[
+                {
+                  required: true,
+                  message: false,
+                },
+              ]}
+            >
+              <Input placeholder="Description" style={{ width: "300px" }} />
+            </Form.Item>
+            <Form.Item
+              name="date"
+              rules={[
+                {
+                  required: true,
+                  message: false,
+                },
+              ]}
+            >
+              <DatePicker format={dateFormat} onChange={this.dateHandler} />
+            </Form.Item>
+            <Form.Item
+              name="workingHours"
+              rules={[
+                {
+                  required: true,
+                  message: false,
+                },
+              ]}
+            >
+              <InputNumber min={1} max={24} placeholder="Hours" type="number" />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={this.state.loading}
+              >
+                Add
+              </Button>
+            </Form.Item>
+          </Space>
+        </Form>
+      </div>
+    );
+  }
 }
 
-function TimeManager(props) {
-  // const [column, setColumn] = useState({});
-  // const [data, setData] = useState({});
-  return (
-    <div>
-      <Space direction="horizontal" size={12}>
-        <Input placeholder="Enter work name" style={{ width: "300px" }} />
-        <Select mode="tags" style={{ width: "150px" }} placeholder="Tags">
-          {children}
-        </Select>
-        <RangePicker showTime={{ format: "HH:mm" }} format="YYYY-MM-DD HH:mm" />
-        <Button type="primary">Add</Button>
-      </Space>
-    </div>
-  );
-}
+TimeManager.contextType = AuthContext;
 
 export default TimeManager;
