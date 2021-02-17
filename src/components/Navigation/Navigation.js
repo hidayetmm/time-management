@@ -41,7 +41,6 @@ function Navigation() {
       <Menu
         mode="horizontal"
         selectedKeys={[history.location.pathname]}
-        // style={{ background: "#17a2b8", color: "white" }}
         theme="dark"
       >
         {userValue.userDetails ? (

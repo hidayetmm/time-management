@@ -68,7 +68,7 @@ class TimeManager extends Component {
                 },
               ]}
             >
-              <Input placeholder="Work name" style={{ width: "300px" }} />
+              <Input placeholder="Work name" style={{ width: "20vw" }} />
             </Form.Item>
             <Form.Item
               name="description"
@@ -79,7 +79,7 @@ class TimeManager extends Component {
                 },
               ]}
             >
-              <Input placeholder="Description" style={{ width: "300px" }} />
+              <Input placeholder="Description" style={{ width: "20vw" }} />
             </Form.Item>
             <Form.Item
               name="date"

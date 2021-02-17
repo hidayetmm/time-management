@@ -3,3 +3,7 @@
   width: 100%;
   top: 0;
 }
+
+.Logout:hover {
+  background-color: white;
+}
