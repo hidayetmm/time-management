@@ -6,7 +6,7 @@ import classes from "./Login.module.css";
 
 import AuthContext from "../../context/AuthContext";
 
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button } from "antd";
 
 const layout = {
   labelCol: {

@@ -1,45 +1,29 @@
-import { React, Component } from "react";
+import { React, useState, useEffect } from "react";
+import axios from "axios";
 
-import { Table, Tag, Space } from "antd";
-
-console.log(JSON.parse(localStorage.getItem("user")));
+import { Table, Space } from "antd";
 
 const columns = [
   {
-    title: "Name",
-    dataIndex: "name",
+    title: "Work name",
+    dataIndex: "workName",
     key: "name",
     render: (text) => <a href="/#">{text}</a>,
   },
   {
-    title: "Age",
-    dataIndex: "age",
-    key: "age",
+    title: "Hours",
+    dataIndex: "workingHours",
+    key: "hours",
   },
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
+    title: "Description",
+    dataIndex: "description",
+    key: "description",
   },
   {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: (tags) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "loser") {
-            color = "volcano";
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
+    title: "Date",
+    dataIndex: "date",
+    key: "date",
   },
   {
     title: "Action",
@@ -52,40 +36,29 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: "1",
-    // name: JSON.parse(localStorage.getItem("user")).username,
-    name: "hidayat",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sidney No. 1 Lake Park",
-    tags: ["cool", "teacher"],
-  },
-];
+function ManagerData() {
+  const [data, setData] = useState([]);
 
-class ManagerData extends Component {
-  state = {};
-  render() {
-    return (
-      <div>
-        <Table columns={columns} dataSource={data} />
-      </div>
-    );
-  }
+  useEffect(() => {
+    let url = "https://time-mgm-demo.getsandbox.com:443/records";
+    axios
+      .get(url)
+      .then((response) => {
+        console.log(response.data.data);
+        setData(response.data.data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // eslint-disable-next-line
+  }, []);
+
+  return (
+    <div>
+      <Table columns={columns} dataSource={data} rowKey="id" />
+    </div>
+  );
 }
 
 export default ManagerData;
