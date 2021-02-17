@@ -37,16 +37,15 @@ class TimeManager extends Component {
       .catch((error) => {
         this.setState({ loading: false });
         console.log(error.response.data.error);
-        if (error.response.data.error.code === 1006) {
-          message.warning(
-            "Date should not be in future! Unless you're not a time traveler."
-          );
-        }
       });
   };
 
   warning = () => {
     message.warning("Please fill in all the required fields.");
+  };
+
+  disabledDate = (current) => {
+    return current && current.valueOf() > Date.now();
   };
 
   render() {
@@ -91,7 +90,10 @@ class TimeManager extends Component {
                 },
               ]}
             >
-              <DatePicker format={dateFormat} onChange={this.dateHandler} />
+              <DatePicker
+                format={dateFormat}
+                disabledDate={this.disabledDate}
+              />
             </Form.Item>
             <Form.Item
               name="workingHours"

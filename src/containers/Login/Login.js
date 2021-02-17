@@ -44,6 +44,7 @@ class Login extends Component {
       })
       .catch((error) => {
         this.setState({ status: error.response.data.error.message });
+        this.setState({ loading: false });
       });
   };
 
@@ -65,9 +66,6 @@ class Login extends Component {
         <Form
           {...layout}
           name="basic"
-          initialValues={{
-            remember: true,
-          }}
           onFinish={(values) => this.submitHandler(values)}
         >
           <Form.Item
@@ -94,10 +92,6 @@ class Login extends Component {
             ]}
           >
             <Input.Password />
-          </Form.Item>
-
-          <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-            <Checkbox>Remember me</Checkbox>
           </Form.Item>
 
           <Form.Item {...tailLayout}>

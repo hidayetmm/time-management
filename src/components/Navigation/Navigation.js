@@ -1,7 +1,8 @@
 import { React, useContext } from "react";
 
+import classes from "./Navigation.module.css";
 import AuthContext from "../../context/AuthContext";
-import { useHistory } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
 
 import Menu from "antd/lib/menu";
 import {
@@ -36,8 +37,13 @@ function Navigation() {
   };
 
   return (
-    <div>
-      <Menu mode="horizontal" defaultSelectedKeys={[history.location.pathname]}>
+    <div className={classes.Navigation}>
+      <Menu
+        mode="horizontal"
+        selectedKeys={[history.location.pathname]}
+        // style={{ background: "#17a2b8", color: "white" }}
+        theme="dark"
+      >
         {userValue.userDetails ? (
           <>
             <Menu.Item
@@ -85,4 +91,4 @@ function Navigation() {
   );
 }
 
-export default Navigation;
+export default withRouter(Navigation);

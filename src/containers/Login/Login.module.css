@@ -1,9 +1,4 @@
 .Form {
-  margin: 15% 10%;
-}
-
-@media (max-width: 576px) {
-  .Form {
-    margin: 15% 15%;
-  }
+  padding: 20% 15% 0 15%;
+  height: 100vh;
 }
