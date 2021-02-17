@@ -40,7 +40,7 @@ class Login extends Component {
       .then((response) => {
         localStorage.setItem("user", JSON.stringify(response.data.data));
         this.context.setUserDetails(response.data.data);
-        this.setState({ redirect: "/management" });
+        this.setState({ redirect: true });
       })
       .catch((error) => {
         this.setState({ status: error.response.data.error.message });
@@ -59,7 +59,7 @@ class Login extends Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/management" />;
+      return <Redirect to="/records" />;
     }
     return (
       <div className={classes.Form}>

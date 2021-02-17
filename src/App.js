@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import AuthContext from "./context/AuthContext";
 
 import Login from "./containers/Login/Login";
-import TimeManagement from "./containers/TimeManagement/TimeManagement";
+import RecordManagement from "./containers/RecordManagement/RecordManagement";
 import Navigation from "./components/Navigation/Navigation";
 import NotFound from "./components/NotFound/NotFound";
 import Registration from "./containers/Registration/Registration";
@@ -32,10 +32,10 @@ class App extends Component {
           <Switch>
             <PrivateRoute
               authed={this.state.userDetails}
-              path="/management"
-              component={TimeManagement}
+              path="/records"
+              component={RecordManagement}
             />
-            <Redirect exact from="/" to="/management" />
+            <Redirect exact from="/" to="/records" />
             <Route path="/login" component={Login} />
             <Route path="/registration" component={Registration} />
             <Route path="/404" component={NotFound} />

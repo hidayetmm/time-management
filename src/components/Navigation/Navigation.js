@@ -19,7 +19,7 @@ function Navigation() {
   const history = useHistory();
 
   const managementHandler = () => {
-    history.replace("/management");
+    history.replace("/records");
   };
 
   const logoutHandler = () => {
@@ -47,15 +47,8 @@ function Navigation() {
         {userValue.userDetails ? (
           <>
             <Menu.Item
-              key="/management"
-              icon={<EditOutlined />}
-              onClick={managementHandler}
-            >
-              Management
-            </Menu.Item>
-            <Menu.Item
               key="/records"
-              icon={<HistoryOutlined />}
+              icon={<EditOutlined />}
               onClick={managementHandler}
             >
               Records

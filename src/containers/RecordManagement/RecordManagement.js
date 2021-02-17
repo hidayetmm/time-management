@@ -9,7 +9,7 @@ import { Layout } from "antd";
 
 const { Content, Footer } = Layout;
 
-function TimeManagement() {
+function RecordManagement() {
   return (
     <AuthContext.Consumer>
       {(value) => {
@@ -30,7 +30,7 @@ function TimeManagement() {
                 </Row>
               </Content>
               <Footer style={{ textAlign: "center" }}>
-                Ant Design ©2018 Created by Ant UED
+                Time Management ©2021 Created by Hidayat Mammadov
               </Footer>
             </Layout>
           </div>
@@ -40,4 +40,4 @@ function TimeManagement() {
   );
 }
 
-export default TimeManagement;
+export default RecordManagement;
