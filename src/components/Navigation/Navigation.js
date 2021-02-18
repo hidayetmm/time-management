@@ -4,13 +4,12 @@ import classes from "./Navigation.module.css";
 import AuthContext from "../../context/AuthContext";
 import { useHistory, withRouter } from "react-router-dom";
 
-import Menu from "antd/lib/menu";
+import { Menu } from "antd";
 import {
   LoginOutlined,
   LogoutOutlined,
   UserOutlined,
   EditOutlined,
-  HistoryOutlined,
 } from "@ant-design/icons";
 import "antd/dist/antd.css";
 

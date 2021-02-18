@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import AuthContext from "../../context/AuthContext";
 // import classes from "./TimeManagement.module.css";
 import { Row, Col } from "antd";
@@ -10,6 +11,27 @@ import { Layout } from "antd";
 const { Content, Footer } = Layout;
 
 function RecordManagement() {
+  const [data, setData] = useState([]);
+
+  const fetchData = () => {
+    let url = "https://time-mgm-demo.getsandbox.com:443/records";
+    axios
+      .get(url)
+      .then((response) => {
+        console.log(response.data.data);
+        setData(response.data.data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <AuthContext.Consumer>
       {(value) => {
@@ -20,17 +42,17 @@ function RecordManagement() {
               <Content style={{ padding: "150px 40px" }}>
                 <Row>
                   <Col span={22} offset={1}>
-                    <TimeManager />
+                    <TimeManager addHandler={fetchData} />
                   </Col>
                 </Row>
                 <Row>
                   <Col span={22} offset={1}>
-                    <ManagerData />
+                    <ManagerData data={data} />
                   </Col>
                 </Row>
               </Content>
               <Footer style={{ textAlign: "center" }}>
-                Time Management ©2021 Created by Hidayat Mammadov
+                Time Management ©2021
               </Footer>
             </Layout>
           </div>

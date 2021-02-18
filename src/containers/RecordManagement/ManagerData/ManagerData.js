@@ -1,5 +1,4 @@
-import { React, useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 
 import { Table, Space } from "antd";
 
@@ -36,27 +35,10 @@ const columns = [
   },
 ];
 
-function ManagerData() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    let url = "https://time-mgm-demo.getsandbox.com:443/records";
-    axios
-      .get(url)
-      .then((response) => {
-        console.log(response.data.data);
-        setData(response.data.data);
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    // eslint-disable-next-line
-  }, []);
-
+function ManagerData(props) {
   return (
     <div>
-      <Table columns={columns} dataSource={data} rowKey="id" />
+      <Table columns={columns} dataSource={props.data} rowKey="id" />
     </div>
   );
 }

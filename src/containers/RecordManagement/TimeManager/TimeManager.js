@@ -33,6 +33,7 @@ class TimeManager extends Component {
         this.setState({ loading: false });
         message.success("Successfully added.");
         console.log(response.data.data);
+        this.props.addHandler();
       })
       .catch((error) => {
         this.setState({ loading: false });
