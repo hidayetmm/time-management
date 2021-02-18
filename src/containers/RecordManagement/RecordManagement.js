@@ -47,12 +47,16 @@ function RecordManagement() {
               <Content style={{ padding: "150px 40px" }}>
                 <Row>
                   <Col span={22} offset={1}>
-                    <TimeManager addHandler={fetchData} />
+                    <TimeManager fetchProp={fetchData} />
                   </Col>
                 </Row>
                 <Row>
                   <Col span={22} offset={1}>
-                    <ManagerData data={data} loading={isLoading} />
+                    <ManagerData
+                      data={data}
+                      loading={isLoading}
+                      fetchProp={fetchData}
+                    />
                   </Col>
                 </Row>
               </Content>
