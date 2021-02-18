@@ -38,7 +38,12 @@ const columns = [
 function ManagerData(props) {
   return (
     <div>
-      <Table columns={columns} dataSource={props.data} rowKey="id" />
+      <Table
+        columns={columns}
+        dataSource={props.data}
+        rowKey="id"
+        loading={props.loading}
+      />
     </div>
   );
 }

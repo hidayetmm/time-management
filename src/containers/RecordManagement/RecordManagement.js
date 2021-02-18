@@ -12,17 +12,22 @@ const { Content, Footer } = Layout;
 
 function RecordManagement() {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchData = () => {
+    setIsLoading(true);
+
     let url = "https://time-mgm-demo.getsandbox.com:443/records";
     axios
       .get(url)
       .then((response) => {
+        setIsLoading(false);
         console.log(response.data.data);
         setData(response.data.data);
         console.log(data);
       })
       .catch((error) => {
+        setIsLoading(false);
         console.log(error);
       });
   };
@@ -47,7 +52,7 @@ function RecordManagement() {
                 </Row>
                 <Row>
                   <Col span={22} offset={1}>
-                    <ManagerData data={data} />
+                    <ManagerData data={data} loading={isLoading} />
                   </Col>
                 </Row>
               </Content>
