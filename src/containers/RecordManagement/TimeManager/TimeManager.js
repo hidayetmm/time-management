@@ -20,9 +20,12 @@ class TimeManager extends Component {
 
   onSubmitHandler = (values) => {
     this.setState({ loading: true });
-    values.date = values.date.toDate().toLocaleDateString("en-CA");
+
     const modifiedValues = {
-      ...values,
+      workName: values.workName_timeManager,
+      description: values.description_timeManager,
+      date: values.date_timeManager.toDate().toLocaleDateString("en-CA"),
+      workingHours: values.workingHours_timeManager,
       userId: JSON.parse(localStorage.getItem("user")).id,
     };
 
@@ -32,7 +35,6 @@ class TimeManager extends Component {
       .then((response) => {
         this.setState({ loading: false });
         message.success("Successfully added.");
-        console.log(response.data.data);
         this.props.fetchProp();
       })
       .catch((error) => {
@@ -61,7 +63,7 @@ class TimeManager extends Component {
         >
           <Space direction="horizontal" size={12}>
             <Form.Item
-              name="workName"
+              name="workName_timeManager"
               rules={[
                 {
                   required: true,
@@ -72,7 +74,7 @@ class TimeManager extends Component {
               <Input placeholder="Work name" style={{ width: "20vw" }} />
             </Form.Item>
             <Form.Item
-              name="description"
+              name="description_timeManager"
               rules={[
                 {
                   required: true,
@@ -83,7 +85,7 @@ class TimeManager extends Component {
               <Input placeholder="Description" style={{ width: "20vw" }} />
             </Form.Item>
             <Form.Item
-              name="date"
+              name="date_timeManager"
               rules={[
                 {
                   required: true,
@@ -97,7 +99,7 @@ class TimeManager extends Component {
               />
             </Form.Item>
             <Form.Item
-              name="workingHours"
+              name="workingHours_timeManager"
               rules={[
                 {
                   required: true,

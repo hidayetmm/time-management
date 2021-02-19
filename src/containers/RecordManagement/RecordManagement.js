@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AuthContext from "../../context/AuthContext";
-// import classes from "./TimeManagement.module.css";
 import { Row, Col } from "antd";
-
 import TimeManager from "./TimeManager/TimeManager";
-import ManagerData from "./ManagerData/ManagerData";
+
+// import ManagerData from "./ManagerData/ManagerData";
+import EditableTable from "./ManagerData/EditableTable";
 import { Layout } from "antd";
 
 const { Content, Footer } = Layout;
@@ -52,7 +52,12 @@ function RecordManagement() {
                 </Row>
                 <Row>
                   <Col span={22} offset={1}>
-                    <ManagerData
+                    {/* <ManagerData
+                      data={data}
+                      loading={isLoading}
+                      fetchProp={fetchData}
+                    /> */}
+                    <EditableTable
                       data={data}
                       loading={isLoading}
                       fetchProp={fetchData}

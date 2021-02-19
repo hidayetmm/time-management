@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-import { Table, Popconfirm, message } from "antd";
+import { Table, Popconfirm, message, Space } from "antd";
 
 function ManagerData(props) {
   const deleteHandler = (key) => {
@@ -43,15 +43,19 @@ function ManagerData(props) {
       key: "date",
     },
     {
-      title: "Action",
       key: "action",
+      width: "10%",
       render: (_, record) => (
-        <Popconfirm
-          title="Sure to delete?"
-          onConfirm={() => deleteHandler(record.id)}
-        >
-          <a href="/#">Delete</a>
-        </Popconfirm>
+        <Space size="middle">
+          <a href="/#">Edit</a>
+
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => deleteHandler(record.id)}
+          >
+            <a href="/#">Delete</a>
+          </Popconfirm>
+        </Space>
       ),
     },
   ];
@@ -63,6 +67,7 @@ function ManagerData(props) {
         dataSource={props.data}
         rowKey="id"
         loading={props.loading}
+        bordered
       />
     </div>
   );
