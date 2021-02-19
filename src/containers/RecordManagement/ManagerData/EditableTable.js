@@ -10,16 +10,6 @@ import {
   message,
   Space,
 } from "antd";
-const originData = [];
-
-for (let i = 0; i < 100; i++) {
-  originData.push({
-    key: i.toString(),
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
-  });
-}
 
 const EditableCell = ({
   editing,
@@ -58,7 +48,6 @@ const EditableCell = ({
 
 const EditableTable = (props) => {
   const [form] = Form.useForm();
-  const [data, setData] = useState(originData);
   const [editingKey, setEditingKey] = useState("");
 
   const isEditing = (record) => record.id === editingKey;
@@ -77,25 +66,45 @@ const EditableTable = (props) => {
     setEditingKey("");
   };
 
-  const save = async (key) => {
-    try {
-      const row = await form.validateFields();
-      const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
+  const save = async (record) => {
+    // try {
+    //   const row = await form.validateFields();
+    //   const newData = [...data];
+    //   const index = newData.findIndex((item) => key === item.key);
+    //   if (index > -1) {
+    //     const item = newData[index];
+    //     newData.splice(index, 1, { ...item, ...row });
+    //     setData(newData);
+    //     setEditingKey("");
+    //     console.log(newData);
+    //   } else {
+    //     newData.push(row);
+    //     setData(newData);
+    //     setEditingKey("");
+    //     console.log(row);
+    //   }
+    // } catch (errInfo) {
+    //   console.log("Validate Failed:", errInfo);
+    // }
 
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, { ...item, ...row });
-        setData(newData);
+    const row = await form.validateFields();
+    let url = "https://time-mgm-demo.getsandbox.com:443/records/" + record.id;
+    axios
+      .put(url, row)
+      .then((response) => {
         setEditingKey("");
-      } else {
-        newData.push(row);
-        setData(newData);
+
+        // this.setState({ loading: false });
+        message.success("Successfully updated.");
+        console.log(response);
+        props.fetchProp();
+      })
+      .catch((error) => {
         setEditingKey("");
-      }
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-    }
+
+        // this.setState({ loading: false });
+        console.log(error);
+      });
   };
 
   const deleteHandler = (key) => {
@@ -148,8 +157,8 @@ const EditableTable = (props) => {
         return editable ? (
           <span>
             <a
-              href="/#"
-              onClick={() => save(record.key)}
+              href="#"
+              onClick={() => save(record)}
               style={{
                 marginRight: 8,
               }}
@@ -188,9 +197,10 @@ const EditableTable = (props) => {
       ...col,
       onCell: (record) => ({
         record,
-        inputType: col.dataIndex === "age" ? "number" : "text",
+        inputType: col.dataIndex === "date" ? "date" : "text",
         dataIndex: col.dataIndex,
         title: col.title,
+        key: col.key,
         editing: isEditing(record),
       }),
     };
