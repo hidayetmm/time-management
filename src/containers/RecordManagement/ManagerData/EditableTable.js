@@ -111,7 +111,7 @@ const EditableTable = (props) => {
       dataIndex: "workName",
       key: "name",
       editable: true,
-      render: (text) => <a href="/#">{text}</a>,
+      render: (text) => <Typography.Link>{text}</Typography.Link>,
     },
     {
       title: "Hours",
@@ -148,7 +148,7 @@ const EditableTable = (props) => {
               disabled={editingKey !== ""}
               onClick={() => edit(record)}
             >
-              <FormOutlined style={{ fontSize: "1.2rem" }} />
+              <FormOutlined style={{ fontSize: "1.1rem" }} />
             </Typography.Link>
             <Divider type="vertical" />
             <Popconfirm
@@ -156,7 +156,7 @@ const EditableTable = (props) => {
               onConfirm={() => deleteHandler(record.id)}
             >
               <Typography.Link>
-                <DeleteOutlined style={{ fontSize: "1.2rem" }} />
+                <DeleteOutlined style={{ fontSize: "1.1rem" }} />
               </Typography.Link>
             </Popconfirm>
           </Space>
@@ -184,15 +184,16 @@ const EditableTable = (props) => {
   return (
     <Form form={form} component={false}>
       <Table
+        dataSource={props.data}
+        columns={mergedColumns}
         rowKey="id"
         components={{
           body: {
             cell: EditableCell,
           },
         }}
+        loading={props.loading}
         bordered
-        dataSource={props.data}
-        columns={mergedColumns}
         rowClassName="editable-row"
         pagination={{
           onChange: cancel,
