@@ -9,7 +9,9 @@ import {
   Typography,
   message,
   Space,
+  Divider,
 } from "antd";
+import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const EditableCell = ({
   editing,
@@ -131,37 +133,31 @@ const EditableTable = (props) => {
     },
     {
       dataIndex: "operation",
-      width: "10%",
+      width: "5%",
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
-          <span>
-            <a
-              href="#"
-              onClick={() => save(record)}
-              style={{
-                marginRight: 8,
-              }}
-            >
-              Save
-            </a>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a href="/#">Cancel</a>
-            </Popconfirm>
-          </span>
-        ) : (
           <Space>
+            <Typography.Link onClick={() => save(record)}>Save</Typography.Link>
+            <Divider type="vertical" />
+            <Typography.Link onClick={cancel}>Cancel</Typography.Link>
+          </Space>
+        ) : (
+          <Space size="small">
             <Typography.Link
               disabled={editingKey !== ""}
               onClick={() => edit(record)}
             >
-              Edit
+              <FormOutlined style={{ fontSize: "1.2rem" }} />
             </Typography.Link>
+            <Divider type="vertical" />
             <Popconfirm
               title="Sure to delete?"
               onConfirm={() => deleteHandler(record.id)}
             >
-              <a href="/#">Delete</a>
+              <Typography.Link>
+                <DeleteOutlined style={{ fontSize: "1.2rem" }} />
+              </Typography.Link>
             </Popconfirm>
           </Space>
         );
