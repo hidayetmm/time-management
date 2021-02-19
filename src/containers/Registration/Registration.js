@@ -6,7 +6,7 @@ import classes from "./Registration.module.css";
 
 import AuthContext from "../../context/AuthContext";
 
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button } from "antd";
 
 const layout = {
   labelCol: {
@@ -28,22 +28,25 @@ class Registration extends Component {
     loggedUser: null,
     status: null,
     redirect: null,
+    loading: false,
   };
 
   submitHandler = (values) => {
-    console.log(values);
+    this.setState({ loading: true });
     let baseUrl = "https://time-mgm-demo.getsandbox.com:443/users";
     let data = { ...values, role: "ROLE_USER" };
     axios
       .post(baseUrl, data)
       .then((response) => {
         console.log(response.data.data);
-        this.setState({ redirect: "/management" });
         localStorage.setItem("user", JSON.stringify(response.data.data));
         this.context.setUserDetails(response.data.data);
+        this.setState({ redirect: true });
+        this.setState({ loading: false });
       })
       .catch((error) => {
         this.setState({ status: error.response.data.error.message });
+        this.setState({ loading: false });
       });
   };
 
@@ -54,13 +57,11 @@ class Registration extends Component {
         [e.target.name]: e.target.value,
       },
     }));
-
-    console.log(this.state.login);
   };
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/management" />;
+      return <Redirect to="/records" />;
     }
     return (
       <div className={classes.Form}>
@@ -96,7 +97,11 @@ class Registration extends Component {
           </Form.Item>
 
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.loading}
+            >
               Submit
             </Button>
           </Form.Item>

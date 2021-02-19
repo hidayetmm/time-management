@@ -41,6 +41,7 @@ class Login extends Component {
         localStorage.setItem("user", JSON.stringify(response.data.data));
         this.context.setUserDetails(response.data.data);
         this.setState({ redirect: true });
+        this.setState({ loading: false });
       })
       .catch((error) => {
         this.setState({ status: error.response.data.error.message });

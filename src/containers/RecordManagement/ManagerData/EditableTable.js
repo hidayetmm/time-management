@@ -67,43 +67,23 @@ const EditableTable = (props) => {
   };
 
   const save = async (record) => {
-    // try {
-    //   const row = await form.validateFields();
-    //   const newData = [...data];
-    //   const index = newData.findIndex((item) => key === item.key);
-    //   if (index > -1) {
-    //     const item = newData[index];
-    //     newData.splice(index, 1, { ...item, ...row });
-    //     setData(newData);
-    //     setEditingKey("");
-    //     console.log(newData);
-    //   } else {
-    //     newData.push(row);
-    //     setData(newData);
-    //     setEditingKey("");
-    //     console.log(row);
-    //   }
-    // } catch (errInfo) {
-    //   console.log("Validate Failed:", errInfo);
-    // }
-
+    const hide = message.loading("Updating..", 0);
     const row = await form.validateFields();
     let url = "https://time-mgm-demo.getsandbox.com:443/records/" + record.id;
     axios
       .put(url, row)
       .then((response) => {
+        hide();
         setEditingKey("");
-
-        // this.setState({ loading: false });
-        message.success("Successfully updated.");
         console.log(response);
         props.fetchProp();
+        message.success("Successfully updated.");
       })
       .catch((error) => {
+        hide();
         setEditingKey("");
-
-        // this.setState({ loading: false });
         console.log(error);
+        message.error("Something went wrong.");
       });
   };
 
