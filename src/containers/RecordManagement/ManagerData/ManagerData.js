@@ -33,7 +33,7 @@ const EditableCell = ({
 }) => {
   let inputNode = null;
   if (dataIndex === "workingHours") {
-    inputNode = <InputNumber style={{ width: "50%" }} />;
+    inputNode = <InputNumber style={{ width: "100%" }} />;
   } else if (dataIndex === "date") {
     inputNode = <DatePicker format={dateFormat} disabledDate={disabledDate} />;
   } else {
@@ -76,7 +76,6 @@ const ManagerData = (props) => {
       workingHours: record.workingHours,
       description: record.description,
       date: moment(record.date),
-      // ...record,
     });
     setEditingKey(record.id);
   };
@@ -129,6 +128,7 @@ const ManagerData = (props) => {
       dataIndex: "workName",
       key: "name",
       editable: true,
+      width: "20%",
       render: (text) => <Typography.Link>{text}</Typography.Link>,
     },
     {
@@ -136,18 +136,21 @@ const ManagerData = (props) => {
       dataIndex: "workingHours",
       key: "hours",
       editable: true,
+      width: "8%",
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
       editable: true,
+      width: "35%",
     },
     {
       title: "Date",
       dataIndex: "date",
       key: "date",
       editable: true,
+      width: "15%",
     },
     {
       dataIndex: "operation",
