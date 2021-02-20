@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import moment from "moment";
-import AuthContext from "../../../context/AuthContext";
 import {
   Table,
   Input,
@@ -13,6 +12,7 @@ import {
   Space,
   Divider,
   DatePicker,
+  Tooltip,
 } from "antd";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 
@@ -170,7 +170,9 @@ const ManagerData = (props) => {
               disabled={editingKey !== ""}
               onClick={() => edit(record)}
             >
-              <FormOutlined style={{ fontSize: "1.1rem" }} />
+              <Tooltip title="Edit" color="gray" mouseEnterDelay="0.5">
+                <FormOutlined style={{ fontSize: "1.1rem" }} />
+              </Tooltip>
             </Typography.Link>
             <Divider type="vertical" />
             <Popconfirm
@@ -178,7 +180,9 @@ const ManagerData = (props) => {
               onConfirm={() => deleteHandler(record.id)}
             >
               <Typography.Link>
-                <DeleteOutlined style={{ fontSize: "1.1rem" }} />
+                <Tooltip title="Delete" color="gray" mouseEnterDelay="0.5">
+                  <DeleteOutlined style={{ fontSize: "1.1rem" }} />
+                </Tooltip>
               </Typography.Link>
             </Popconfirm>
           </Space>
