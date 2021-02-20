@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import AuthContext from "../../context/AuthContext";
 import { Row, Col } from "antd";
@@ -13,12 +13,16 @@ function RecordManagement() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const userValue = useContext(AuthContext);
+  console.log(userValue.userDetails.id);
+
   const fetchData = () => {
     setIsLoading(true);
 
-    let url = "https://time-mgm-demo.getsandbox.com:443/records";
+    let url = "https://time-mgm-demo.getsandbox.com:443/users/";
+    let id = userValue.userDetails.id;
     axios
-      .get(url)
+      .get(url + id + "/records")
       .then((response) => {
         setIsLoading(false);
         setData(response.data.data);
