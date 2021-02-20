@@ -11,7 +11,6 @@ import {
   UserOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import "antd/dist/antd.css";
 
 function Navigation() {
   const userValue = useContext(AuthContext);

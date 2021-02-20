@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import moment from "moment";
 import {
   Table,
   Input,
@@ -10,8 +11,15 @@ import {
   message,
   Space,
   Divider,
+  DatePicker,
 } from "antd";
 import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
+
+const dateFormat = "YYYY-MM-DD";
+
+const disabledDate = (current) => {
+  return current && current.valueOf() > Date.now();
+};
 
 const EditableCell = ({
   editing,
@@ -23,7 +31,15 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
+  let inputNode = null;
+  if (dataIndex === "workingHours") {
+    inputNode = <InputNumber style={{ width: "50%" }} />;
+  } else if (dataIndex === "date") {
+    inputNode = <DatePicker format={dateFormat} disabledDate={disabledDate} />;
+  } else {
+    inputNode = <Input />;
+  }
+
   return (
     <td {...restProps}>
       {editing ? (
@@ -48,7 +64,7 @@ const EditableCell = ({
   );
 };
 
-const EditableTable = (props) => {
+const ManagerData = (props) => {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
 
@@ -56,10 +72,11 @@ const EditableTable = (props) => {
 
   const edit = (record) => {
     form.setFieldsValue({
-      name: "",
-      age: "",
-      address: "",
-      ...record,
+      workName: record.workName,
+      workingHours: record.workingHours,
+      description: record.description,
+      date: moment(record.date),
+      // ...record,
     });
     setEditingKey(record.id);
   };
@@ -71,13 +88,17 @@ const EditableTable = (props) => {
   const save = async (record) => {
     const hide = message.loading("Updating..", 0);
     const row = await form.validateFields();
+    const modifiedValues = {
+      ...row,
+      date: row.date.toDate().toLocaleDateString("en-CA"),
+    };
+
     let url = "https://time-mgm-demo.getsandbox.com:443/records/" + record.id;
     axios
-      .put(url, row)
+      .put(url, modifiedValues)
       .then((response) => {
         hide();
         setEditingKey("");
-        console.log(response);
         props.fetchProp();
         message.success("Successfully updated.");
       })
@@ -90,14 +111,11 @@ const EditableTable = (props) => {
   };
 
   const deleteHandler = (key) => {
-    console.log(key);
-
     let url = "https://time-mgm-demo.getsandbox.com:443/records/" + key;
     axios
       .delete(url)
       .then((response) => {
         message.success("Successfully removed.");
-        console.log(response.data.data);
         props.fetchProp();
       })
       .catch((error) => {
@@ -173,7 +191,7 @@ const EditableTable = (props) => {
       ...col,
       onCell: (record) => ({
         record,
-        inputType: col.dataIndex === "date" ? "date" : "text",
+        inputType: col.dataIndex === "workingHours" ? "number" : "text",
         dataIndex: col.dataIndex,
         title: col.title,
         key: col.key,
@@ -203,4 +221,4 @@ const EditableTable = (props) => {
   );
 };
 
-export default EditableTable;
+export default ManagerData;

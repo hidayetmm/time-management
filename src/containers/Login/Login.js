@@ -1,7 +1,6 @@
 import { React, Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from "axios";
-import "antd/dist/antd.css";
 import classes from "./Login.module.css";
 
 import AuthContext from "../../context/AuthContext";
