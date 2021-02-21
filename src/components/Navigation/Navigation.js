@@ -16,9 +16,6 @@ function Navigation() {
   const userValue = useContext(AuthContext);
   const history = useHistory();
 
-  // const userRole = userValue.userDetails.role;
-  // console.log(userRole);
-
   const managementHandler = () => {
     history.replace("/records");
   };
@@ -36,8 +33,6 @@ function Navigation() {
   const registerHandler = () => {
     history.replace("/registration");
   };
-
-  console.log(userValue.userDetails);
 
   return (
     <div className={classes.Navigation}>

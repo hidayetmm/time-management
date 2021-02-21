@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../../../context/AuthContext";
 import axios from "axios";
 import moment from "moment";
 import {
@@ -13,7 +14,6 @@ import {
   Divider,
   DatePicker,
   Tooltip,
-  //
   Button,
 } from "antd";
 import { FormOutlined, DeleteOutlined, FilterFilled } from "@ant-design/icons";
@@ -70,6 +70,9 @@ const EditableCell = ({
 };
 
 const ManagerData = (props) => {
+  const userValue = useContext(AuthContext);
+  console.log(userValue.userDetails.role);
+
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const filtered = props.filtered;
@@ -128,58 +131,6 @@ const ManagerData = (props) => {
       });
   };
 
-  // const filter = (res) => ({
-  //   filterDropdown: () => (
-  //     <div style={{ padding: 8 }}>
-  //       <RangePicker
-  //         placeholder={"Begin date"}
-  //         style={{ marginRight: "10px" }}
-  //         format={dateFormat}
-  //         // value={selectedKeys}
-  //         // onChange={}
-  //       />
-
-  //       <Button
-  //         type="primary"
-  //         // onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
-  //         icon="search"
-  //         size="small"
-  //         style={{ width: 90, marginRight: 8 }}
-  //       >
-  //         Search
-  //       </Button>
-  //       <Button
-  //         // onClick={}
-  //         size="small"
-  //         style={{ width: 90 }}
-  //       >
-  //         Reset
-  //       </Button>
-  //     </div>
-  //   ),
-  //   filterIcon: (
-  //     <FilterFilled
-  //     // type="search"
-  //     // style={{ color: filtered ? "#1890ff" : undefined }}
-  //     />
-  //   ),
-  // onFilter: (value, record) =>
-  //   record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
-  // onFilterDropdownVisibleChange: (visible) => {
-  //   if (visible) {
-  //     //setTimeout(() => this.searchInput.select());
-  //   }
-  // },
-  // render: (text) => (
-  //   <Highlighter
-  //     highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-  //     // searchWords={[this.state.searchText]}
-  //     autoEscape
-  //     // textToHighlight={text.toString()}
-  //   />
-  // ),
-  // });
-
   const columns = [
     {
       title: "Work name",
@@ -215,6 +166,7 @@ const ManagerData = (props) => {
             // style={{ marginRight: "10px" }}
             format={dateFormat}
             onChange={(dates) => props.setRange(dates)}
+            disabledDate={disabledDate}
           />
 
           <Button
@@ -276,6 +228,18 @@ const ManagerData = (props) => {
       },
     },
   ];
+
+  if (userValue.userDetails.role === "ROLE_ADMIN") {
+    columns.unshift({
+      title: "Work name",
+      dataIndex: "userName",
+      key: "userName",
+      editable: true,
+      width: "20%",
+      render: (text) => <Typography.Link>{text}</Typography.Link>,
+    });
+  }
+
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
