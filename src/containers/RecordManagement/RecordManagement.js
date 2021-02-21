@@ -22,6 +22,7 @@ function RecordManagement() {
 
   const fetchData = () => {
     setIsLoading(true);
+    setFiltered(false);
 
     let url = "https://time-mgm-demo.getsandbox.com:443/users/";
     let id = userValue.userDetails.id;

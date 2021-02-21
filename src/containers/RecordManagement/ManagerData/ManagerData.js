@@ -180,10 +180,6 @@ const ManagerData = (props) => {
   // ),
   // });
 
-  const onFilterr = (value) => {
-    console.log(value);
-  };
-
   const columns = [
     {
       title: "Work name",
