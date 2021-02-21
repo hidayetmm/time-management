@@ -19,7 +19,6 @@ function RecordManagement() {
   const [isLoading, setIsLoading] = useState(false);
 
   const userValue = useContext(AuthContext);
-  console.log(userValue.userDetails.role);
 
   const fetchData = () => {
     setIsLoading(true);

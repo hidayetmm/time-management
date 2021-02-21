@@ -16,6 +16,9 @@ function Navigation() {
   const userValue = useContext(AuthContext);
   const history = useHistory();
 
+  // const userRole = userValue.userDetails.role;
+  // console.log(userRole);
+
   const managementHandler = () => {
     history.replace("/records");
   };
@@ -34,6 +37,8 @@ function Navigation() {
     history.replace("/registration");
   };
 
+  console.log(userValue.userDetails);
+
   return (
     <div className={classes.Navigation}>
       <Menu
@@ -50,6 +55,15 @@ function Navigation() {
             >
               Records
             </Menu.Item>
+            {userValue.userDetails.role === "ROLE_ADMIN" ? (
+              <Menu.Item
+                key="/users"
+                icon={<EditOutlined />}
+                onClick={managementHandler}
+              >
+                Users
+              </Menu.Item>
+            ) : null}
             <Menu.Item
               key="logout"
               icon={<LogoutOutlined />}
