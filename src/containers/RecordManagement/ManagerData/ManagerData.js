@@ -231,8 +231,8 @@ const ManagerData = (props) => {
 
   if (userValue.userDetails.role === "ROLE_ADMIN") {
     columns.unshift({
-      title: "Work name",
-      dataIndex: "userName",
+      title: "Username",
+      dataIndex: ["user", "username"],
       key: "userName",
       editable: true,
       width: "20%",

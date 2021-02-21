@@ -30,14 +30,8 @@ function RecordManagement() {
         .get(url)
         .then((response) => {
           setIsLoading(false);
-          setData(
-            response.data.data.map((res) => ({
-              ...res,
-              userName: res.user.username,
-            }))
-          );
+          setData(response.data.data);
           console.log(response.data.data);
-          console.log(data);
         })
         .catch((error) => {
           setIsLoading(false);
