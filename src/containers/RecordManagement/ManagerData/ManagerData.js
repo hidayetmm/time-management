@@ -13,8 +13,12 @@ import {
   Divider,
   DatePicker,
   Tooltip,
+  //
+  Button,
 } from "antd";
-import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
+import { FormOutlined, DeleteOutlined, FilterFilled } from "@ant-design/icons";
+
+const { RangePicker } = DatePicker;
 
 const dateFormat = "YYYY-MM-DD";
 
@@ -68,6 +72,7 @@ const EditableCell = ({
 const ManagerData = (props) => {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
+  const filtered = props.filtered;
 
   const isEditing = (record) => record.id === editingKey;
 
@@ -123,6 +128,62 @@ const ManagerData = (props) => {
       });
   };
 
+  // const filter = (res) => ({
+  //   filterDropdown: () => (
+  //     <div style={{ padding: 8 }}>
+  //       <RangePicker
+  //         placeholder={"Begin date"}
+  //         style={{ marginRight: "10px" }}
+  //         format={dateFormat}
+  //         // value={selectedKeys}
+  //         // onChange={}
+  //       />
+
+  //       <Button
+  //         type="primary"
+  //         // onClick={() => this.handleSearch(selectedKeys, confirm, dataIndex)}
+  //         icon="search"
+  //         size="small"
+  //         style={{ width: 90, marginRight: 8 }}
+  //       >
+  //         Search
+  //       </Button>
+  //       <Button
+  //         // onClick={}
+  //         size="small"
+  //         style={{ width: 90 }}
+  //       >
+  //         Reset
+  //       </Button>
+  //     </div>
+  //   ),
+  //   filterIcon: (
+  //     <FilterFilled
+  //     // type="search"
+  //     // style={{ color: filtered ? "#1890ff" : undefined }}
+  //     />
+  //   ),
+  // onFilter: (value, record) =>
+  //   record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+  // onFilterDropdownVisibleChange: (visible) => {
+  //   if (visible) {
+  //     //setTimeout(() => this.searchInput.select());
+  //   }
+  // },
+  // render: (text) => (
+  //   <Highlighter
+  //     highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+  //     // searchWords={[this.state.searchText]}
+  //     autoEscape
+  //     // textToHighlight={text.toString()}
+  //   />
+  // ),
+  // });
+
+  const onFilterr = (value) => {
+    console.log(value);
+  };
+
   const columns = [
     {
       title: "Work name",
@@ -152,6 +213,35 @@ const ManagerData = (props) => {
       key: "date",
       editable: true,
       width: "15%",
+      filterDropdown: ({ confirm }) => (
+        <Space direction="horizontal" style={{ padding: 10 }} size="small">
+          <RangePicker
+            // style={{ marginRight: "10px" }}
+            format={dateFormat}
+            onChange={(dates) => props.setRange(dates)}
+          />
+
+          <Button
+            type="primary"
+            onClick={() => props.filter(confirm)}
+            // icon="search"
+            size="middle"
+            // style={{ width: "20%", marginRight: 8 }}
+          >
+            Filter
+          </Button>
+          <Button
+            onClick={props.fetchProp}
+            size="middle"
+            // style={{ width: 90 }}
+          >
+            Reset
+          </Button>
+        </Space>
+      ),
+      filterIcon: () => (
+        <FilterFilled style={{ color: filtered ? "#1890ff" : undefined }} />
+      ),
     },
     {
       dataIndex: "operation",
@@ -218,6 +308,7 @@ const ManagerData = (props) => {
             cell: EditableCell,
           },
         }}
+        // onChange={props.filtered}
         loading={props.loading}
         bordered
         rowClassName="editable-row"
