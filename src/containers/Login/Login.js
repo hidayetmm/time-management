@@ -24,7 +24,6 @@ const tailLayout = {
 
 class Login extends Component {
   state = {
-    loggedUser: null,
     status: null,
     redirect: null,
     loading: false,
@@ -33,14 +32,15 @@ class Login extends Component {
   submitHandler = (values) => {
     this.setState({ loading: true });
     let baseUrl = "https://time-mgm-demo.getsandbox.com:443/auth/login";
-    let data = values;
     axios
-      .post(baseUrl, data)
+      .post(baseUrl, values)
       .then((response) => {
         localStorage.setItem("user", JSON.stringify(response.data.data));
         this.context.setUserDetails(response.data.data);
         this.setState({ redirect: true });
         this.setState({ loading: false });
+        console.log(response);
+        console.log(this.context.userDetails);
       })
       .catch((error) => {
         this.setState({ status: error.response.data.error.message });
@@ -48,14 +48,12 @@ class Login extends Component {
       });
   };
 
-  inputChange = (e) => {
-    this.setState((prevState) => ({
-      login: {
-        ...prevState.login,
-        [e.target.name]: e.target.value,
-      },
-    }));
-  };
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
 
   render() {
     if (this.state.redirect) {
@@ -103,19 +101,9 @@ class Login extends Component {
               Submit
             </Button>
           </Form.Item>
-          {this.state.status ? (
-            <p
-              style={{ fontSize: "90%", color: "#3f51b5", textAlign: "center" }}
-            >
-              {this.state.status}
-            </p>
-          ) : (
-            <p
-              style={{ fontSize: "90%", color: "#3f51b5", textAlign: "center" }}
-            >
-              Please, enter your login information.
-            </p>
-          )}
+          <p style={{ fontSize: "90%", color: "#3f51b5", textAlign: "center" }}>
+            {this.state.status || "Please, enter your login information."}
+          </p>
         </Form>
       </div>
     );

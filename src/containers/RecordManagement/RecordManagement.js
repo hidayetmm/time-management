@@ -19,23 +19,38 @@ function RecordManagement() {
   const [isLoading, setIsLoading] = useState(false);
 
   const userValue = useContext(AuthContext);
+  console.log(userValue.userDetails.role);
 
   const fetchData = () => {
     setIsLoading(true);
     setFiltered(false);
 
-    let url = "https://time-mgm-demo.getsandbox.com:443/users/";
-    let id = userValue.userDetails.id;
-    axios
-      .get(url + id + "/records")
-      .then((response) => {
-        setIsLoading(false);
-        setData(response.data.data);
-      })
-      .catch((error) => {
-        setIsLoading(false);
-        console.log(error);
-      });
+    if (userValue.userDetails.role === "ROLE_ADMIN") {
+      let url = "https://time-mgm-demo.getsandbox.com:443/records";
+      axios
+        .get(url)
+        .then((response) => {
+          setIsLoading(false);
+          setData(response.data.data);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.log(error);
+        });
+    } else {
+      let url = "https://time-mgm-demo.getsandbox.com:443/users/";
+      let id = userValue.userDetails.id;
+      axios
+        .get(url + id + "/records")
+        .then((response) => {
+          setIsLoading(false);
+          setData(response.data.data);
+        })
+        .catch((error) => {
+          setIsLoading(false);
+          console.log(error);
+        });
+    }
   };
 
   useEffect(() => {

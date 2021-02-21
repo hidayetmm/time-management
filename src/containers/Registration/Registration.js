@@ -81,7 +81,6 @@ class Registration extends Component {
           >
             <Input />
           </Form.Item>
-
           <Form.Item
             label="Password"
             name="password"
@@ -94,7 +93,6 @@ class Registration extends Component {
           >
             <Input.Password />
           </Form.Item>
-
           <Form.Item {...tailLayout}>
             <Button
               type="primary"
@@ -104,19 +102,10 @@ class Registration extends Component {
               Submit
             </Button>
           </Form.Item>
-          {this.state.status ? (
-            <p
-              style={{ fontSize: "90%", color: "#3f51b5", textAlign: "center" }}
-            >
-              {this.state.status}
-            </p>
-          ) : (
-            <p
-              style={{ fontSize: "90%", color: "#3f51b5", textAlign: "center" }}
-            >
-              Please, enter your username and password to register.
-            </p>
-          )}
+          <p style={{ fontSize: "90%", color: "#3f51b5", textAlign: "center" }}>
+            {this.state.status ||
+              "Please, enter your username and password to register."}
+          </p>
         </Form>
       </div>
     );
