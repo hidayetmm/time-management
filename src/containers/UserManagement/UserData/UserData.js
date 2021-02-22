@@ -68,7 +68,7 @@ const EditableCell = ({
   );
 };
 
-const ManagerData = (props) => {
+const UserData = (props) => {
   const userValue = useContext(AuthContext);
 
   const [form] = Form.useForm();
@@ -131,66 +131,26 @@ const ManagerData = (props) => {
 
   const columns = [
     {
-      title: "Work name",
-      dataIndex: "workName",
-      key: "name",
+      title: "User name",
+      dataIndex: ["user", "username"],
+      key: "userName",
       editable: true,
       width: "20%",
-      render:
-        userValue.userDetails.role === "ROLE_USER"
-          ? (text) => <Typography.Link>{text}</Typography.Link>
-          : null,
+      render: (text) => <Typography.Link>{text}</Typography.Link>,
     },
     {
-      title: "Hours",
-      dataIndex: "workingHours",
-      key: "hours",
-      editable: true,
-      width: "8%",
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
       editable: true,
       width: "35%",
     },
     {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
+      title: "Working hours",
+      dataIndex: "workingHours",
+      key: "hours",
       editable: true,
-      width: "15%",
-      filterDropdown: ({ confirm }) => (
-        <Space direction="horizontal" style={{ padding: 10 }} size="small">
-          <RangePicker
-            // style={{ marginRight: "10px" }}
-            format={dateFormat}
-            onChange={(dates) => props.setRange(dates)}
-            disabledDate={disabledDate}
-          />
-
-          <Button
-            type="primary"
-            onClick={() => props.filter(confirm)}
-            // icon="search"
-            size="middle"
-            // style={{ width: "20%", marginRight: 8 }}
-          >
-            Filter
-          </Button>
-          <Button
-            onClick={props.fetchProp}
-            size="middle"
-            // style={{ width: 90 }}
-          >
-            Reset
-          </Button>
-        </Space>
-      ),
-      filterIcon: () => (
-        <FilterFilled style={{ color: filtered ? "#1890ff" : undefined }} />
-      ),
+      width: "8%",
     },
     {
       dataIndex: "operation",
@@ -225,17 +185,6 @@ const ManagerData = (props) => {
       },
     },
   ];
-
-  if (userValue.userDetails.role === "ROLE_ADMIN") {
-    columns.unshift({
-      title: "User name",
-      dataIndex: ["user", "username"],
-      key: "userName",
-      editable: true,
-      width: "20%",
-      render: (text) => <Typography.Link>{text}</Typography.Link>,
-    });
-  }
 
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
@@ -276,4 +225,4 @@ const ManagerData = (props) => {
   );
 };
 
-export default ManagerData;
+export default UserData;

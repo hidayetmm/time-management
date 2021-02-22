@@ -3,14 +3,14 @@ import axios from "axios";
 import moment from "moment";
 import AuthContext from "../../context/AuthContext";
 import { Row, Col } from "antd";
-import TimeManager from "./TimeManager/TimeManager";
-import ManagerData from "./ManagerData/ManagerData";
+import UserManager from "./UserManager/UserManager";
+import UserData from "./UserData/UserData";
 
 import { Layout } from "antd";
 
 const { Content, Footer } = Layout;
 
-function RecordManagement() {
+function UserManagement() {
   const [data, setData] = useState([]);
   const [range, setRange] = useState(null);
   const [filtered, setFiltered] = useState(false);
@@ -115,12 +115,12 @@ function RecordManagement() {
               <Content style={{ padding: "150px 40px" }}>
                 <Row>
                   <Col span={22} offset={1}>
-                    <TimeManager fetchProp={fetchData} />
+                    <UserManager fetchProp={fetchData} />
                   </Col>
                 </Row>
                 <Row>
                   <Col span={22} offset={1}>
-                    <ManagerData
+                    <UserData
                       data={data}
                       loading={isLoading}
                       fetchProp={fetchData}
@@ -142,4 +142,4 @@ function RecordManagement() {
   );
 }
 
-export default RecordManagement;
+export default UserManagement;

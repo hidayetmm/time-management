@@ -20,6 +20,10 @@ function Navigation() {
     history.replace("/records");
   };
 
+  const usersHandler = () => {
+    history.replace("/users");
+  };
+
   const logoutHandler = () => {
     localStorage.clear();
     userValue.setUserDetails(null);
@@ -53,8 +57,8 @@ function Navigation() {
             {userValue.userDetails.role === "ROLE_ADMIN" ? (
               <Menu.Item
                 key="/users"
-                icon={<EditOutlined />}
-                onClick={managementHandler}
+                icon={<UserOutlined />}
+                onClick={usersHandler}
               >
                 Users
               </Menu.Item>
