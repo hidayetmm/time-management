@@ -39,11 +39,10 @@ const EditableCell = ({
 }) => {
   let inputNode = null;
   if (dataIndex === "role") {
-    console.log(record);
     inputNode = (
       <Select>
         <Option value="ROLE_USER">Basic user</Option>
-        <Option value="ROLE_ADMIN">Admin</Option>
+        <Option value="ROLE_ADMIN">Adminstrator</Option>
       </Select>
     );
   } else {
@@ -97,16 +96,15 @@ const UserData = (props) => {
   };
 
   const save = async (record) => {
+    // role: "ROLE_ADMIN"
+    // username: "admin"
+
     const hide = message.loading("Updating..", 0);
     const row = await form.validateFields();
-    const modifiedValues = {
-      ...row,
-      date: row.date.toDate().toLocaleDateString("en-CA"),
-    };
 
-    let url = "https://time-mgm-demo.getsandbox.com:443/records/" + record.id;
+    let url = "https://time-mgm-demo.getsandbox.com:443/users/" + record.id;
     axios
-      .put(url, modifiedValues)
+      .put(url, row)
       .then((response) => {
         hide();
         setEditingKey("");
@@ -170,7 +168,6 @@ const UserData = (props) => {
       width: "5%",
       render: (_, record) => {
         const editable = isEditing(record);
-        console.log(record);
         return editable ? (
           <Space>
             <Typography.Link onClick={() => save(record)}>Save</Typography.Link>
