@@ -2,17 +2,11 @@ import React, { Component } from "react";
 import axios from "axios";
 import AuthContext from "../../../context/AuthContext";
 
-import {
-  Form,
-  Input,
-  Button,
-  DatePicker,
-  Space,
-  InputNumber,
-  message,
-} from "antd";
+import { Form, Input, Button, Space, message, Select } from "antd";
 
-class TimeManager extends Component {
+const { Option } = Select;
+
+class UserManager extends Component {
   state = {
     loading: false,
     errorMessage: null,
@@ -22,16 +16,13 @@ class TimeManager extends Component {
 
   onSubmitHandler = (values) => {
     this.setState({ loading: true });
-
     const modifiedValues = {
-      workName: values.workName_timeManager,
-      description: values.description_timeManager,
-      date: values.date_timeManager.toDate().toLocaleDateString("en-CA"),
-      workingHours: values.workingHours_timeManager,
-      userId: JSON.parse(localStorage.getItem("user")).id,
+      username: values.userName_userManager,
+      password: values.password_userManager,
+      role: values.role_userManager,
     };
 
-    let url = "https://time-mgm-demo.getsandbox.com:443/records";
+    let url = "https://time-mgm-demo.getsandbox.com:443/users";
     axios
       .post(url, modifiedValues)
       .then((response) => {
@@ -55,8 +46,6 @@ class TimeManager extends Component {
   };
 
   render() {
-    const dateFormat = "YYYY-MM-DD";
-
     return (
       <div>
         <Form
@@ -67,7 +56,7 @@ class TimeManager extends Component {
         >
           <Space direction="horizontal" size={12}>
             <Form.Item
-              name="workName_timeManager"
+              name="userName_userManager"
               rules={[
                 {
                   required: true,
@@ -75,10 +64,10 @@ class TimeManager extends Component {
                 },
               ]}
             >
-              <Input placeholder="Work name" style={{ width: "20vw" }} />
+              <Input placeholder="User name" style={{ width: "20vw" }} />
             </Form.Item>
             <Form.Item
-              name="description_timeManager"
+              name="role_userManager"
               rules={[
                 {
                   required: true,
@@ -86,10 +75,13 @@ class TimeManager extends Component {
                 },
               ]}
             >
-              <Input placeholder="Description" style={{ width: "20vw" }} />
+              <Select placeholder="User role" style={{ width: "10vw" }}>
+                <Option value="ROLE_USER">Basic user</Option>
+                <Option value="ROLE_ADMIN">Adminstrator</Option>
+              </Select>
             </Form.Item>
             <Form.Item
-              name="date_timeManager"
+              name="password_userManager"
               rules={[
                 {
                   required: true,
@@ -97,22 +89,13 @@ class TimeManager extends Component {
                 },
               ]}
             >
-              <DatePicker
-                format={dateFormat}
-                disabledDate={this.disabledDate}
+              <Input
+                type="password"
+                placeholder="Password"
+                style={{ width: "20vw" }}
               />
             </Form.Item>
-            <Form.Item
-              name="workingHours_timeManager"
-              rules={[
-                {
-                  required: true,
-                  message: false,
-                },
-              ]}
-            >
-              <InputNumber min={1} max={24} placeholder="Hours" type="number" />
-            </Form.Item>
+
             <Form.Item>
               <Button
                 type="primary"
@@ -129,6 +112,6 @@ class TimeManager extends Component {
   }
 }
 
-TimeManager.contextType = AuthContext;
+UserManager.contextType = AuthContext;
 
-export default TimeManager;
+export default UserManager;

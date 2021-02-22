@@ -1,31 +1,19 @@
-import React, { useState, useContext } from "react";
-import AuthContext from "../../../context/AuthContext";
+import React, { useState } from "react";
 import axios from "axios";
-import moment from "moment";
 import {
   Table,
   Input,
-  InputNumber,
   Popconfirm,
   Form,
   Typography,
   message,
   Space,
   Divider,
-  DatePicker,
-  Button,
   Select,
 } from "antd";
-import { FormOutlined, DeleteOutlined, FilterFilled } from "@ant-design/icons";
+import { FormOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
-
-const dateFormat = "YYYY-MM-DD";
-
-const disabledDate = (current) => {
-  return current && current.valueOf() > Date.now();
-};
 
 const EditableCell = ({
   editing,
@@ -74,11 +62,8 @@ const EditableCell = ({
 };
 
 const UserData = (props) => {
-  const userValue = useContext(AuthContext);
-
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
-  const filtered = props.filtered;
 
   const isEditing = (record) => record.id === editingKey;
 
@@ -96,9 +81,6 @@ const UserData = (props) => {
   };
 
   const save = async (record) => {
-    // role: "ROLE_ADMIN"
-    // username: "admin"
-
     const hide = message.loading("Updating..", 0);
     const row = await form.validateFields();
 
@@ -153,16 +135,9 @@ const UserData = (props) => {
       dataIndex: "role",
       key: "role",
       editable: true,
-      width: "35%",
+      width: "30%",
       render: (text) => (text === "ROLE_ADMIN" ? "Adminstrator" : "Basic user"),
     },
-    // {
-    //   title: "Working hours",
-    //   dataIndex: "workingHours",
-    //   key: "hours",
-    //   editable: true,
-    //   width: "8%",
-    // },
     {
       dataIndex: "operation",
       width: "5%",
