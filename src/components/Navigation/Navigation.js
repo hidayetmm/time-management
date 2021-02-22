@@ -1,5 +1,7 @@
 import { React, useContext } from "react";
 
+import { NavLink } from "react-router-dom";
+
 import classes from "./Navigation.module.css";
 import AuthContext from "../../context/AuthContext";
 import { useHistory, withRouter } from "react-router-dom";
@@ -16,26 +18,10 @@ function Navigation() {
   const userValue = useContext(AuthContext);
   const history = useHistory();
 
-  const managementHandler = () => {
-    history.replace("/records");
-  };
-
-  const usersHandler = () => {
-    history.replace("/users");
-  };
-
   const logoutHandler = () => {
     localStorage.clear();
     userValue.setUserDetails(null);
     history.replace("/login");
-  };
-
-  const loginHandler = () => {
-    history.replace("/login");
-  };
-
-  const registerHandler = () => {
-    history.replace("/registration");
   };
 
   return (
@@ -47,20 +33,12 @@ function Navigation() {
       >
         {userValue.userDetails ? (
           <>
-            <Menu.Item
-              key="/records"
-              icon={<EditOutlined />}
-              onClick={managementHandler}
-            >
-              Records
+            <Menu.Item key="/records" icon={<EditOutlined />}>
+              <NavLink to="/records">Records</NavLink>
             </Menu.Item>
             {userValue.userDetails.role === "ROLE_ADMIN" ? (
-              <Menu.Item
-                key="/users"
-                icon={<UserOutlined />}
-                onClick={usersHandler}
-              >
-                Users
+              <Menu.Item key="/users" icon={<UserOutlined />}>
+                <NavLink to="/users">Users</NavLink>
               </Menu.Item>
             ) : null}
             <Menu.Item
@@ -73,19 +51,11 @@ function Navigation() {
           </>
         ) : (
           <>
-            <Menu.Item
-              key="/login"
-              icon={<LoginOutlined />}
-              onClick={loginHandler}
-            >
-              Login
+            <Menu.Item key="/login" icon={<LoginOutlined />}>
+              <NavLink to="/login">Login</NavLink>
             </Menu.Item>
-            <Menu.Item
-              key="/registration"
-              icon={<UserOutlined />}
-              onClick={registerHandler}
-            >
-              Register
+            <Menu.Item key="/registration" icon={<UserOutlined />}>
+              <NavLink to="/registration">Register</NavLink>
             </Menu.Item>
           </>
         )}

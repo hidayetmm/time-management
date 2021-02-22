@@ -3,7 +3,6 @@ import "./App.css";
 import "antd/dist/antd.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 import AuthContext from "./context/AuthContext";
-
 import Login from "./containers/Login/Login";
 import RecordManagement from "./containers/RecordManagement/RecordManagement";
 import UserManagement from "./containers/UserManagement/UserManagement";

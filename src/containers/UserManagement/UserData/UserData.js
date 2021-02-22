@@ -14,9 +14,11 @@ import {
   Divider,
   DatePicker,
   Button,
+  Select,
 } from "antd";
 import { FormOutlined, DeleteOutlined, FilterFilled } from "@ant-design/icons";
 
+const { Option } = Select;
 const { RangePicker } = DatePicker;
 
 const dateFormat = "YYYY-MM-DD";
@@ -36,10 +38,14 @@ const EditableCell = ({
   ...restProps
 }) => {
   let inputNode = null;
-  if (dataIndex === "workingHours") {
-    inputNode = <InputNumber style={{ width: "100%" }} />;
-  } else if (dataIndex === "date") {
-    inputNode = <DatePicker format={dateFormat} disabledDate={disabledDate} />;
+  if (dataIndex === "role") {
+    console.log(record);
+    inputNode = (
+      <Select>
+        <Option value="ROLE_USER">Basic user</Option>
+        <Option value="ROLE_ADMIN">Admin</Option>
+      </Select>
+    );
   } else {
     inputNode = <Input />;
   }
@@ -79,10 +85,9 @@ const UserData = (props) => {
 
   const edit = (record) => {
     form.setFieldsValue({
-      workName: record.workName,
-      workingHours: record.workingHours,
-      description: record.description,
-      date: moment(record.date),
+      id: record.id,
+      username: record.username,
+      role: record.role,
     });
     setEditingKey(record.id);
   };
@@ -117,7 +122,7 @@ const UserData = (props) => {
   };
 
   const deleteHandler = (key) => {
-    let url = "https://time-mgm-demo.getsandbox.com:443/records/" + key;
+    let url = "https://time-mgm-demo.getsandbox.com:443/users/" + key;
     axios
       .delete(url)
       .then((response) => {
@@ -131,8 +136,15 @@ const UserData = (props) => {
 
   const columns = [
     {
+      title: "ID",
+      dataIndex: "id",
+      key: "role",
+      editable: false,
+      width: "5%",
+    },
+    {
       title: "User name",
-      dataIndex: ["user", "username"],
+      dataIndex: "username",
       key: "userName",
       editable: true,
       width: "20%",
@@ -144,19 +156,21 @@ const UserData = (props) => {
       key: "role",
       editable: true,
       width: "35%",
+      render: (text) => (text === "ROLE_ADMIN" ? "Adminstrator" : "Basic user"),
     },
-    {
-      title: "Working hours",
-      dataIndex: "workingHours",
-      key: "hours",
-      editable: true,
-      width: "8%",
-    },
+    // {
+    //   title: "Working hours",
+    //   dataIndex: "workingHours",
+    //   key: "hours",
+    //   editable: true,
+    //   width: "8%",
+    // },
     {
       dataIndex: "operation",
       width: "5%",
       render: (_, record) => {
         const editable = isEditing(record);
+        console.log(record);
         return editable ? (
           <Space>
             <Typography.Link onClick={() => save(record)}>Save</Typography.Link>
