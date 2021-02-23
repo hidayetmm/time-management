@@ -1,9 +1,29 @@
-# Application for time management system.
+# **Application for time management system**
 
-- User is able to log in.
+## **Features**
+
+- User is able to register and log in.
 - User can add (and edit and delete) a row describing what they have worked on, what date, and for how long.
 - Implemented two roles with different permission levels: a regular user is only able to CRUD on their owned records and an admin is able to CRUD all records and users.
 - Filter entries by date from-to.
+
+## **Demo**
+
+Try demo at [this link.](https://time-management-phi.vercel.app/)
+
+#### Use these sample users to login:
+
+- Regular user:
+
+  > username: user
+  >
+  > password: 1234
+
+- Admin:
+
+  > username: admin
+  >
+  > password: 1234
 
 # Getting Started with Create React App
 
