@@ -22,9 +22,9 @@ class UserManager extends Component {
       role: values.role_userManager,
     };
 
-    let url = "https://time-mgm-demo.getsandbox.com:443/users";
+    let url = process.env.REACT_APP_BASE_URL;
     axios
-      .post(url, modifiedValues)
+      .post(url + "/users", modifiedValues)
       .then((response) => {
         this.setState({ loading: false });
         message.success("Successfully added.");

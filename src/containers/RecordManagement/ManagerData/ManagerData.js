@@ -99,9 +99,9 @@ const ManagerData = (props) => {
       date: row.date.toDate().toLocaleDateString("en-CA"),
     };
 
-    let url = "https://time-mgm-demo.getsandbox.com:443/records/" + record.id;
+    let url = process.env.REACT_APP_BASE_URL;
     axios
-      .put(url, modifiedValues)
+      .put(url + "/records/" + record.id, modifiedValues)
       .then((response) => {
         hide();
         setEditingKey("");

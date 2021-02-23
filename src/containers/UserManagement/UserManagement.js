@@ -16,9 +16,9 @@ function UserManagement() {
   const fetchData = () => {
     setIsLoading(true);
 
-    let url = "https://time-mgm-demo.getsandbox.com:443/users";
+    let url = process.env.REACT_APP_BASE_URL;
     axios
-      .get(url)
+      .get(url + "/users")
       .then((response) => {
         setIsLoading(false);
         setData(response.data.data);

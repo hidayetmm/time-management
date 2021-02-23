@@ -31,9 +31,9 @@ class TimeManager extends Component {
       userId: JSON.parse(localStorage.getItem("user")).id,
     };
 
-    let url = "https://time-mgm-demo.getsandbox.com:443/records";
+    let url = process.env.REACT_APP_BASE_URL;
     axios
-      .post(url, modifiedValues)
+      .post(url + "/records", modifiedValues)
       .then((response) => {
         this.setState({ loading: false });
         message.success("Successfully added.");

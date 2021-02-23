@@ -32,10 +32,11 @@ class Registration extends Component {
 
   submitHandler = (values) => {
     this.setState({ loading: true });
-    let baseUrl = "https://time-mgm-demo.getsandbox.com:443/users";
+
+    let url = process.env.REACT_APP_BASE_URL;
     let data = { ...values, role: "ROLE_USER" };
     axios
-      .post(baseUrl, data)
+      .post(url + "/users", data)
       .then((response) => {
         console.log(response.data.data);
         localStorage.setItem("user", JSON.stringify(response.data.data));

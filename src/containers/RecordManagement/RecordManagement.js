@@ -25,9 +25,9 @@ function RecordManagement() {
     setFiltered(false);
 
     if (userValue.userDetails.role === "ROLE_ADMIN") {
-      let url = "https://time-mgm-demo.getsandbox.com:443/records";
+      let url = process.env.REACT_APP_BASE_URL;
       axios
-        .get(url)
+        .get(url + "/records")
         .then((response) => {
           setIsLoading(false);
           setData(response.data.data);
@@ -37,10 +37,10 @@ function RecordManagement() {
           console.log(error);
         });
     } else {
-      let url = "https://time-mgm-demo.getsandbox.com:443/users/";
+      let url = process.env.REACT_APP_BASE_URL;
       let id = userValue.userDetails.id;
       axios
-        .get(url + id + "/records")
+        .get(url + "/users/" + id + "/records")
         .then((response) => {
           setIsLoading(false);
           setData(response.data.data);
@@ -68,9 +68,9 @@ function RecordManagement() {
     setIsLoading(true);
 
     if (userValue.userDetails.role === "ROLE_ADMIN") {
-      let url = "https://time-mgm-demo.getsandbox.com:443/records";
+      let url = process.env.REACT_APP_BASE_URL;
       axios
-        .get(url, {
+        .get(url + "/records", {
           params: {
             dateFrom: dateFrom,
             dateTo: dateTo,
@@ -85,10 +85,10 @@ function RecordManagement() {
           console.log(error.message);
         });
     } else {
-      let url = "https://time-mgm-demo.getsandbox.com:443/users/";
+      let url = process.env.REACT_APP_BASE_URL;
       let id = userValue.userDetails.id;
       axios
-        .get(url + id + "/records", {
+        .get(url + "/users/" + id + "/records", {
           params: {
             dateFrom: dateFrom,
             dateTo: dateTo,

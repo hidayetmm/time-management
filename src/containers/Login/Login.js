@@ -31,9 +31,10 @@ class Login extends Component {
 
   submitHandler = (values) => {
     this.setState({ loading: true });
-    let baseUrl = "https://time-mgm-demo.getsandbox.com:443/auth/login";
+
+    let url = process.env.REACT_APP_BASE_URL;
     axios
-      .post(baseUrl, values)
+      .post(url + "/auth/login", values)
       .then((response) => {
         localStorage.setItem("user", JSON.stringify(response.data.data));
         this.context.setUserDetails(response.data.data);

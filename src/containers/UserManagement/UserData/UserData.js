@@ -84,9 +84,9 @@ const UserData = (props) => {
     const hide = message.loading("Updating..", 0);
     const row = await form.validateFields();
 
-    let url = "https://time-mgm-demo.getsandbox.com:443/users/" + record.id;
+    let url = process.env.REACT_APP_BASE_URL;
     axios
-      .put(url, row)
+      .put(url + "/users/" + record.id, row)
       .then((response) => {
         hide();
         setEditingKey("");
@@ -102,9 +102,9 @@ const UserData = (props) => {
   };
 
   const deleteHandler = (key) => {
-    let url = "https://time-mgm-demo.getsandbox.com:443/users/" + key;
+    let url = process.env.REACT_APP_BASE_URL;
     axios
-      .delete(url)
+      .delete(url + "/users/" + key)
       .then((response) => {
         message.success("Successfully removed.");
         props.fetchProp();
