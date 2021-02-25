@@ -28,7 +28,7 @@ class TimeManager extends Component {
       description: values.description_timeManager,
       date: values.date_timeManager.toDate().toLocaleDateString("en-CA"),
       workingHours: values.workingHours_timeManager,
-      userId: JSON.parse(localStorage.getItem("user")).id,
+      userId: this.context.userDetails.id,
     };
 
     let url = process.env.REACT_APP_BASE_URL;

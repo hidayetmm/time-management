@@ -269,7 +269,7 @@ const ManagerData = (props) => {
         bordered
         rowClassName="editable-row"
         pagination={{
-          onChange: cancel,
+          defaultPageSize: 5,
         }}
       />
     </Form>
