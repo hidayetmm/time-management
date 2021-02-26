@@ -254,7 +254,7 @@ const ManagerData = (props) => {
       title: "User name",
       dataIndex: ["user", "username"],
       key: "userName",
-      editable: true,
+      editable: false,
       width: "20%",
       render: (text) => <Typography.Link>{text}</Typography.Link>,
     });

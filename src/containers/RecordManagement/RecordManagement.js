@@ -111,7 +111,7 @@ function RecordManagement() {
         // console.log("CONTEXT: ", value);
         return (
           <div>
-            <Layout>
+            <Layout style={{ minHeight: "100vh" }}>
               <Content style={{ padding: "150px 40px 0px" }}>
                 <Row>
                   <Col span={22} offset={1}>
