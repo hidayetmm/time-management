@@ -131,11 +131,31 @@ const ManagerData = (props) => {
 
   const columns = [
     {
+      title: "Work name, Hours, Description, Date",
+      key: "xs",
+      editable: true,
+      width: "20%",
+      render: (_, record) => (
+        <>
+          {record.workName}
+          <br />
+          {record.workingHours}
+          <br />
+          {record.description}
+          <br />
+          {record.date}
+        </>
+      ),
+
+      responsive: ["xs"],
+    },
+    {
       title: "Work name",
       dataIndex: "workName",
       key: "name",
       editable: true,
       width: "20%",
+      responsive: ["sm"],
       render:
         userValue.userDetails.role === "ROLE_USER"
           ? (text) => <Typography.Link>{text}</Typography.Link>
@@ -147,6 +167,7 @@ const ManagerData = (props) => {
       key: "hours",
       editable: true,
       width: "8%",
+      responsive: ["sm"],
     },
     {
       title: "Description",
@@ -154,6 +175,7 @@ const ManagerData = (props) => {
       key: "description",
       editable: true,
       width: "35%",
+      responsive: ["sm"],
     },
     {
       title: "Date",
@@ -191,6 +213,7 @@ const ManagerData = (props) => {
       filterIcon: () => (
         <FilterFilled style={{ color: filtered ? "#1890ff" : undefined }} />
       ),
+      responsive: ["sm"],
     },
     {
       dataIndex: "operation",

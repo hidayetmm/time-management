@@ -2,15 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import AuthContext from "../../../context/AuthContext";
 
-import {
-  Form,
-  Input,
-  Button,
-  DatePicker,
-  Space,
-  InputNumber,
-  message,
-} from "antd";
+import { Form, Input, Button, DatePicker, InputNumber, message } from "antd";
 
 class TimeManager extends Component {
   state = {
@@ -64,65 +56,62 @@ class TimeManager extends Component {
           scrollToFirstError
           onFinishFailed={this.warning}
           ref={this.formRef}
+          layout="inline"
+          style={{ paddingBottom: "2%" }}
         >
-          <Space direction="horizontal" size={12}>
-            <Form.Item
-              name="workName_timeManager"
-              rules={[
-                {
-                  required: true,
-                  message: false,
-                },
-              ]}
+          <Form.Item
+            name="workName_timeManager"
+            rules={[
+              {
+                required: true,
+                message: false,
+              },
+            ]}
+          >
+            <Input placeholder="Work name" style={{ width: "20vw" }} />
+          </Form.Item>
+          <Form.Item
+            name="description_timeManager"
+            rules={[
+              {
+                required: true,
+                message: false,
+              },
+            ]}
+          >
+            <Input placeholder="Description" style={{ width: "20vw" }} />
+          </Form.Item>
+          <Form.Item
+            name="date_timeManager"
+            rules={[
+              {
+                required: true,
+                message: false,
+              },
+            ]}
+          >
+            <DatePicker format={dateFormat} disabledDate={this.disabledDate} />
+          </Form.Item>
+          <Form.Item
+            name="workingHours_timeManager"
+            rules={[
+              {
+                required: true,
+                message: false,
+              },
+            ]}
+          >
+            <InputNumber min={1} max={24} placeholder="Hours" type="number" />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={this.state.loading}
             >
-              <Input placeholder="Work name" style={{ width: "20vw" }} />
-            </Form.Item>
-            <Form.Item
-              name="description_timeManager"
-              rules={[
-                {
-                  required: true,
-                  message: false,
-                },
-              ]}
-            >
-              <Input placeholder="Description" style={{ width: "20vw" }} />
-            </Form.Item>
-            <Form.Item
-              name="date_timeManager"
-              rules={[
-                {
-                  required: true,
-                  message: false,
-                },
-              ]}
-            >
-              <DatePicker
-                format={dateFormat}
-                disabledDate={this.disabledDate}
-              />
-            </Form.Item>
-            <Form.Item
-              name="workingHours_timeManager"
-              rules={[
-                {
-                  required: true,
-                  message: false,
-                },
-              ]}
-            >
-              <InputNumber min={1} max={24} placeholder="Hours" type="number" />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={this.state.loading}
-              >
-                Add
-              </Button>
-            </Form.Item>
-          </Space>
+              Add
+            </Button>
+          </Form.Item>
         </Form>
       </div>
     );

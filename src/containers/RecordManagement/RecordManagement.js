@@ -8,7 +8,7 @@ import ManagerData from "./ManagerData/ManagerData";
 
 import { Layout } from "antd";
 
-const { Content, Footer } = Layout;
+const { Header, Content, Footer } = Layout;
 
 function RecordManagement() {
   const [data, setData] = useState([]);
@@ -111,8 +111,8 @@ function RecordManagement() {
         // console.log("CONTEXT: ", value);
         return (
           <div>
-            <Layout style={{ height: "100vh" }}>
-              <Content style={{ padding: "150px 40px" }}>
+            <Layout>
+              <Content style={{ padding: "150px 40px 0px" }}>
                 <Row>
                   <Col span={22} offset={1}>
                     <TimeManager fetchProp={fetchData} />
