@@ -246,6 +246,22 @@ const ManagerData = (props) => {
           </Space>
         );
       },
+      responsive: ["sm"],
+    },
+    {
+      dataIndex: "delete",
+      width: "5%",
+      render: (_, record) => (
+        <Popconfirm
+          title="Sure to delete?"
+          onConfirm={() => deleteHandler(record.id)}
+        >
+          <Typography.Link>
+            <DeleteOutlined style={{ fontSize: "1.1rem" }} />
+          </Typography.Link>
+        </Popconfirm>
+      ),
+      responsive: ["xs"],
     },
   ];
 

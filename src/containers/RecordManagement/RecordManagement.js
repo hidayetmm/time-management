@@ -8,7 +8,7 @@ import ManagerData from "./ManagerData/ManagerData";
 
 import { Layout } from "antd";
 
-const { Header, Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 function RecordManagement() {
   const [data, setData] = useState([]);
