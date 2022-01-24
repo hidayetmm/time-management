@@ -7,7 +7,7 @@
 - Implemented two roles with different permission levels: a regular user is only able to CRUD on their owned records and an admin is able to CRUD all records and users.
 - Filter entries by date from-to.
 
-## **Demo**
+## Demo
 
 Try demo at [this link.](https://time-management-phi.vercel.app/)
 
