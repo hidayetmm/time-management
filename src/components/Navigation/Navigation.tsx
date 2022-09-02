@@ -1,9 +1,7 @@
-import { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { useLocation, NavLink } from "react-router-dom";
 import classes from "./Navigation.module.css";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "app/hooks";
-
+import { useAppSelector, useAppDispatch } from "app/hooks";
 import { Menu } from "antd";
 import {
   LoginOutlined,
@@ -11,25 +9,23 @@ import {
   UserOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { selectUser } from "features/auth/authSlice";
+import { logout, selectUser } from "features/auth/authSlice";
 
 function Navigation() {
-  const auth = useAppSelector(selectUser);
   const navigate = useNavigate();
+  const location = useLocation();
+  const auth = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
 
   const logoutHandler = () => {
     localStorage.clear();
-    userValue.setUserDetails(null);
+    dispatch(logout());
     navigate("login", { replace: true });
   };
 
   return (
     <div className={classes.Navigation}>
-      <Menu
-        mode="horizontal"
-        selectedKeys={[history.location.pathname]}
-        theme="dark"
-      >
+      <Menu mode="horizontal" selectedKeys={[location.pathname]} theme="dark">
         {auth.user ? (
           <>
             <Menu.Item key="/records" icon={<EditOutlined />}>
