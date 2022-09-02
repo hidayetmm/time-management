@@ -1,6 +1,5 @@
-import { useLocation, NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import classes from "./Navigation.module.css";
-import { useNavigate } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "app/hooks";
 import { Menu } from "antd";
 import {
@@ -10,15 +9,15 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import { logout, selectUser } from "features/auth/authSlice";
+import { withRouter } from "hooks/withRouter";
 
-function Navigation() {
+const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const auth = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
   const logoutHandler = () => {
-    localStorage.clear();
     dispatch(logout());
     navigate("login", { replace: true });
   };
@@ -57,6 +56,6 @@ function Navigation() {
       </Menu>
     </div>
   );
-}
+};
 
-export default Navigation;
+export default withRouter(Navigation);
