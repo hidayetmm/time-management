@@ -1,11 +1,7 @@
-import { React, useContext } from "react";
-
-import { NavLink } from "react-router-dom";
-
+import { useLocation, NavLink } from "react-router-dom";
 import classes from "./Navigation.module.css";
-import AuthContext from "../../context/AuthContext";
-import { useHistory, withRouter } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "app/hooks";
 import { Menu } from "antd";
 import {
   LoginOutlined,
@@ -13,30 +9,29 @@ import {
   UserOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+import { logout, selectUser } from "features/auth/authSlice";
 
 function Navigation() {
-  const userValue = useContext(AuthContext);
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const auth = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
 
   const logoutHandler = () => {
     localStorage.clear();
-    userValue.setUserDetails(null);
-    history.replace("/login");
+    dispatch(logout());
+    navigate("login", { replace: true });
   };
 
   return (
     <div className={classes.Navigation}>
-      <Menu
-        mode="horizontal"
-        selectedKeys={[history.location.pathname]}
-        theme="dark"
-      >
-        {userValue.userDetails ? (
+      <Menu mode="horizontal" selectedKeys={[location.pathname]} theme="dark">
+        {auth.user ? (
           <>
             <Menu.Item key="/records" icon={<EditOutlined />}>
               <NavLink to="/records">Records</NavLink>
             </Menu.Item>
-            {userValue.userDetails.role === "ROLE_ADMIN" ? (
+            {auth.user.role === "ADMIN" ? (
               <Menu.Item key="/users" icon={<UserOutlined />}>
                 <NavLink to="/users">Users</NavLink>
               </Menu.Item>
@@ -64,4 +59,4 @@ function Navigation() {
   );
 }
 
-export default withRouter(Navigation);
+export default Navigation;
