@@ -22,38 +22,47 @@ const Navigation = () => {
     navigate("login", { replace: true });
   };
 
+  const loggedInMenuItems = [
+    {
+      key: "/records",
+      icon: <EditOutlined />,
+      label: "Records",
+    },
+    auth.user?.role === "ADMIN"
+      ? {
+          key: "/users",
+          icon: <UserOutlined />,
+          label: "Users",
+        }
+      : null,
+    {
+      key: "logout",
+      icon: <LogoutOutlined />,
+      label: "Logout",
+    },
+  ];
+
+  const loggedOutMenuItems = [
+    {
+      key: "/login",
+      icon: <LoginOutlined />,
+      label: "Login",
+    },
+    {
+      key: "/registration",
+      icon: <UserOutlined />,
+      label: "Register",
+    },
+  ];
+
   return (
     <div className={classes.Navigation}>
-      <Menu mode="horizontal" selectedKeys={[location.pathname]} theme="dark">
-        {auth.user ? (
-          <>
-            <Menu.Item key="/records" icon={<EditOutlined />}>
-              <NavLink to="/records">Records</NavLink>
-            </Menu.Item>
-            {auth.user.role === "ADMIN" ? (
-              <Menu.Item key="/users" icon={<UserOutlined />}>
-                <NavLink to="/users">Users</NavLink>
-              </Menu.Item>
-            ) : null}
-            <Menu.Item
-              key="logout"
-              icon={<LogoutOutlined />}
-              onClick={logoutHandler}
-            >
-              Logout
-            </Menu.Item>
-          </>
-        ) : (
-          <>
-            <Menu.Item key="/login" icon={<LoginOutlined />}>
-              <NavLink to="/login">Login</NavLink>
-            </Menu.Item>
-            <Menu.Item key="/registration" icon={<UserOutlined />}>
-              <NavLink to="/registration">Register</NavLink>
-            </Menu.Item>
-          </>
-        )}
-      </Menu>
+      <Menu
+        mode="horizontal"
+        selectedKeys={[location.pathname]}
+        theme="dark"
+        items={auth.user ? loggedInMenuItems : loggedOutMenuItems}
+      />
     </div>
   );
 };
