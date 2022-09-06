@@ -24,12 +24,6 @@ export const authApi = api.injectEndpoints({
         method: "POST",
         body: credentials,
       }),
-      extraOptions: {
-        backoff: () => {
-          // We intentionally error once on login, and this breaks out of retrying. The next login attempt will succeed.
-          retry.fail({ fake: "error" });
-        },
-      },
     }),
     signup: build.mutation<{ token: string; user: User }, any>({
       query: (credentials: any) => ({
@@ -37,12 +31,6 @@ export const authApi = api.injectEndpoints({
         method: "POST",
         body: credentials,
       }),
-      extraOptions: {
-        backoff: () => {
-          // We intentionally error once on login, and this breaks out of retrying. The next login attempt will succeed.
-          retry.fail({ fake: "error" });
-        },
-      },
     }),
   }),
 });

@@ -1,14 +1,14 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import classes from "./Navigation.module.css";
 import { useAppSelector, useAppDispatch } from "app/hooks";
-import { Menu } from "antd";
+import { Menu, MenuProps } from "antd";
 import {
   LoginOutlined,
   LogoutOutlined,
   UserOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { logout, selectUser } from "features/auth/authSlice";
+import { setCredentials, selectUser } from "features/auth/authSlice";
 import { withRouter } from "hooks/withRouter";
 
 const Navigation = () => {
@@ -18,11 +18,11 @@ const Navigation = () => {
   const dispatch = useAppDispatch();
 
   const logoutHandler = () => {
-    dispatch(logout());
+    dispatch(setCredentials({ user: null, isLoggedIn: false }));
     navigate("login", { replace: true });
   };
 
-  const loggedInMenuItems = [
+  const loggedInMenuItems: MenuProps["items"] = [
     {
       key: "/records",
       icon: <EditOutlined />,
@@ -39,6 +39,7 @@ const Navigation = () => {
       key: "logout",
       icon: <LogoutOutlined />,
       label: "Logout",
+      onClick: () => logoutHandler(),
     },
   ];
 
@@ -47,11 +48,13 @@ const Navigation = () => {
       key: "/login",
       icon: <LoginOutlined />,
       label: "Login",
+      onClick: () => navigate("login"),
     },
     {
       key: "/registration",
       icon: <UserOutlined />,
       label: "Register",
+      onClick: () => navigate("registration"),
     },
   ];
 

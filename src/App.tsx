@@ -2,8 +2,8 @@ import "./App.css";
 import "antd/dist/antd.css";
 import Navigation from "components/Navigation/Navigation";
 import { Route, Routes } from "react-router-dom";
-import PrivateRoute from "PrivateRoute";
 import Login from "containers/Login/Login";
+import Registration from "containers/Registration/Registration";
 
 function App() {
   return (
@@ -12,6 +12,7 @@ function App() {
       <Routes>
         {/*<PrivateRoute component={RecordManagement} />*/}
         <Route path="/login" element={<Login />} />
+        <Route path="/registration" element={<Registration />} />
       </Routes>
     </div>
   );

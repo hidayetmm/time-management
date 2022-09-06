@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import classes from "./Login.module.css";
+import classes from "./Registration.module.css";
 import { Form, Input, Button } from "antd";
-import { useLoginMutation } from "app/services/auth";
+import { useAppSelector } from "app/hooks";
+import { selectUser } from "features/auth/authSlice";
+import { useSignupMutation } from "app/services/auth";
 import { LoginCredentials } from "types";
-import { useAppDispatch } from "app/hooks";
-import { setCredentials } from "features/auth/authSlice";
 
 const layout = {
   labelCol: {
@@ -22,43 +21,30 @@ const tailLayout = {
   },
 };
 
-const Login = () => {
-  const dispatch = useAppDispatch();
-  const [status, setStatus] = useState<string>();
-  const [redirect, setRedirect] = useState<boolean>();
-
-  const [login, { isLoading, isSuccess, isError, error, data }] =
-    useLoginMutation();
+const Registration = () => {
+  const auth = useAppSelector(selectUser);
+  const [signup, { isLoading, isSuccess, isError, error, data }] =
+    useSignupMutation();
 
   const submitHandler = async (values: LoginCredentials) => {
     try {
-      const response = await login(values).unwrap();
+      const response = await signup(values).unwrap();
       console.log(response);
-      dispatch(
-        setCredentials({
-          user: {
-            role: "ADMIN",
-            email: "email",
-            full_name: "full name",
-            token: "token",
-          },
-          isLoggedIn: true,
-        })
-      );
     } catch (e) {
       console.log(e);
     }
-    console.log("DATA: ", data);
+    console.log(values);
   };
 
-  if (redirect) {
-    return <Navigate to="/records" replace />;
+  if (auth.isLoggedIn) {
+    return <Navigate to="/records" />;
   }
+
   return (
     <div className={classes.Form}>
       <Form
         {...layout}
-        name="basic"
+        name="registration"
         onFinish={(values) => submitHandler(values)}
       >
         <Form.Item
@@ -73,7 +59,6 @@ const Login = () => {
         >
           <Input />
         </Form.Item>
-
         <Form.Item
           label="Password"
           name="password"
@@ -86,18 +71,18 @@ const Login = () => {
         >
           <Input.Password />
         </Form.Item>
-
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" loading={isLoading}>
             Submit
           </Button>
         </Form.Item>
         <p style={{ fontSize: "90%", color: "#3f51b5", textAlign: "center" }}>
-          {status || "Please, enter your login information."}
+          {(error && "data" in error) ||
+            "Please, enter your username and password to register."}
         </p>
       </Form>
     </div>
   );
 };
 
-export default Login;
+export default Registration;

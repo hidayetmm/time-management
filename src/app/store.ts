@@ -17,11 +17,13 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { api } from "app/services/api";
+import thunk from "redux-thunk";
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  blacklist: [api.reducerPath],
 };
 
 const rootReducer = combineReducers({
@@ -38,7 +40,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(thunk, api.middleware),
 });
 
 export const persistor = persistStore(store);
