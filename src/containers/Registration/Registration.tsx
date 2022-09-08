@@ -1,8 +1,8 @@
 import { Navigate } from "react-router-dom";
 import classes from "./Registration.module.css";
 import { Form, Input, Button } from "antd";
-import { useAppSelector } from "app/hooks";
-import { selectUser } from "features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import { selectUser, setCredentials } from "features/auth/authSlice";
 import { useSignupMutation } from "app/services/auth";
 import { LoginCredentials } from "types";
 
@@ -23,20 +23,21 @@ const tailLayout = {
 
 const Registration = () => {
   const auth = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
   const [signup, { isLoading, isSuccess, isError, error, data }] =
     useSignupMutation();
 
   const submitHandler = async (values: LoginCredentials) => {
     try {
       const response = await signup(values).unwrap();
+      dispatch(setCredentials({ user: response }));
       console.log(response);
     } catch (e) {
       console.log(e);
     }
-    console.log(values);
   };
 
-  if (auth.isLoggedIn) {
+  if (!!auth.user) {
     return <Navigate to="/records" />;
   }
 

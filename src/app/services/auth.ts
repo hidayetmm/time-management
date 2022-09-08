@@ -1,4 +1,4 @@
-import { retry } from "@reduxjs/toolkit/query/react";
+// import { retry } from "@reduxjs/toolkit/query/react";
 import { api } from "./api";
 
 export interface Task {
@@ -9,23 +9,22 @@ export interface Task {
 
 type TasksResponse = Task[];
 
-export interface User {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone: string;
+export interface AuthResponse {
+  id: string;
+  username: string;
+  accessToken: string;
 }
 
 export const authApi = api.injectEndpoints({
   endpoints: (build) => ({
-    login: build.mutation<{ token: string; user: User }, any>({
+    login: build.mutation<AuthResponse, any>({
       query: (credentials: any) => ({
         url: "auth/signin",
         method: "POST",
         body: credentials,
       }),
     }),
-    signup: build.mutation<{ token: string; user: User }, any>({
+    signup: build.mutation<AuthResponse, any>({
       query: (credentials: any) => ({
         url: "auth/signup",
         method: "POST",

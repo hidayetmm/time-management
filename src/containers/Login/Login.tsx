@@ -37,18 +37,17 @@ const Login = () => {
       dispatch(
         setCredentials({
           user: {
+            id: "id",
             role: "ADMIN",
-            email: "email",
-            full_name: "full name",
-            token: "token",
+            username: "full name",
+            accessToken: "token",
           },
-          isLoggedIn: true,
         })
       );
     } catch (e) {
       console.log(e);
     }
-    console.log("DATA: ", data);
+    console.log("ERR: ", error);
   };
 
   if (redirect) {
@@ -86,14 +85,15 @@ const Login = () => {
         >
           <Input.Password />
         </Form.Item>
-
         <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit" loading={isLoading}>
             Submit
           </Button>
         </Form.Item>
         <p style={{ fontSize: "90%", color: "#3f51b5", textAlign: "center" }}>
-          {status || "Please, enter your login information."}
+          {error && "data" in error
+            ? error.data.message
+            : "Please, enter your login information."}
         </p>
       </Form>
     </div>

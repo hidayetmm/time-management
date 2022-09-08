@@ -18,7 +18,7 @@ const Navigation = () => {
   const dispatch = useAppDispatch();
 
   const logoutHandler = () => {
-    dispatch(setCredentials({ user: null, isLoggedIn: false }));
+    dispatch(setCredentials({ user: null }));
     navigate("login", { replace: true });
   };
 

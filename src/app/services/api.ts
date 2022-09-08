@@ -1,18 +1,33 @@
-import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import {
+  BaseQueryFn,
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+  retry,
+} from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
+
+type CustomError = {
+  data: {
+    statusCode: number;
+    message: string;
+    error: string;
+  };
+  status: number;
+};
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.REACT_APP_BASE_URL,
   prepareHeaders: (headers, { getState }) => {
     // By default, if we have a token in the store, let's use that for authenticated requests
-    const token = (getState() as RootState).auth.user?.token;
+    const token = (getState() as RootState).auth.user?.accessToken;
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }
     return headers;
   },
-});
+}) as BaseQueryFn<string | FetchArgs, unknown, CustomError, {}>;
 
 const baseQueryWithRetry = retry(baseQuery, { maxRetries: 1 });
 

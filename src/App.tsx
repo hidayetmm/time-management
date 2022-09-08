@@ -1,5 +1,4 @@
 import "./App.css";
-import "antd/dist/antd.css";
 import Navigation from "components/Navigation/Navigation";
 import { Route, Routes } from "react-router-dom";
 import Login from "containers/Login/Login";
